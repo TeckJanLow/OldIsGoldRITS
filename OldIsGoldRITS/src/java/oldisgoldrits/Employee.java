@@ -10,6 +10,18 @@ package oldisgoldrits;
  *
  * @author Teck Jan Low
  */
-public class Employee {
+public class Employee extends Person {
 
+    private enum Job {
+        Manager, Cashier
+    }
+    private Job job;
+    private long salary;
+    
+    public Employee(String firstName, String lastName, int phone, String email, String street, String city, String state, int zipcode, Job job, long salary) {
+        super(firstName, lastName, phone, email, street, city, state, zipcode);
+        this.job = job;
+        this.salary = salary;
+    }
+    
 }

@@ -20,6 +20,17 @@ public class Person {
     
     public Person(String firstName, String lastName, int phone, String email, String street, String city, String state, int zipcode) {
         this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
+        this.address = new Address(street, city, state, zipcode);
+    }
+    
+    @Override
+    public String toString() {
+        String output;
+        output = "TEST";
+        return output;
     }
     
 }
