@@ -7,13 +7,17 @@ package config;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import oldisgoldrits.properties.DatabaseConnector;
-import oldisgoldrits.properties.DatabaseConnector;
 
 /**
  *
@@ -47,7 +51,27 @@ public class ConnectionTestServlet extends HttpServlet {
             out.println("</html>");
         }
         DatabaseConnector db = new DatabaseConnector();
-        db.connect();
+        Connection conn = db.connect();
+        Logger log = Logger.getLogger(getClass().getSimpleName());
+         String query = "SELECT first_name FROM CUSTOMER";
+ 
+         
+       
+        try {
+                 log.info(conn.getMetaData().getDatabaseProductName());
+      Statement st = conn.createStatement();
+       
+      
+      ResultSet rs = st.executeQuery(query);
+            while(rs.next())
+            {
+                String firstName = rs.getString("first_name");
+                log.info(firstName);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnectionTestServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
