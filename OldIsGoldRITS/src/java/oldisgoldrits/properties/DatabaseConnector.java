@@ -8,6 +8,8 @@ package oldisgoldrits.properties;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -24,7 +26,7 @@ public class DatabaseConnector {
     	
     	try {
          
-    		String filename = "/config.properties";
+    		String filename = "config.properties";
     		input = getClass().getClassLoader().getResourceAsStream(filename);
     		if(input==null){
     	            System.out.println("Sorry, unable to find " + filename);
@@ -38,6 +40,17 @@ public class DatabaseConnector {
                 log.info(prop.getProperty("database"));
     	        log.info(prop.getProperty("user"));
     	        log.info(prop.getProperty("pass"));
+                Connection conn;
+            try {
+                String connectionString = "jdbc:mysql://" + prop.getProperty("database") + "user=" + prop.getProperty("user") + "&password=" + prop.getProperty("pass");
+                conn = DriverManager.getConnection(connectionString);
+
+            } catch (SQLException ex) {
+                // handle any errors
+                log.severe("SQLException: " + ex.getMessage());
+                log.severe("SQLState: " + ex.getSQLState());
+                log.severe("VendorError: " + ex.getErrorCode());
+            }
  
     	} catch (IOException ex) {
     		ex.printStackTrace();
