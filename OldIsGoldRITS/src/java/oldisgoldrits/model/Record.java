@@ -19,7 +19,7 @@ public class Record {
     private String comments;
     
     public Record(String title, String artist, String genre, String comments){
-        this.albumID = 0;
+        
         this.title = title;
         this.artist = artist;
         this.genre = genre;
@@ -49,17 +49,6 @@ public class Record {
     public void setComments(String comments) {
         this.comments = comments;
     }
-    
-    @Override
-    public String toString(){
-        String output;
-        output = String.format("%5s", String.valueOf(albumID));
-        output += String.format("%25s", this.title);
-        output += String.format("%15s", this.artist);
-        output += String.format("%10s", this.genre);
-        output += String.format("%30s", this.comments);
-        
-        return output;
-    }
+
 
 }

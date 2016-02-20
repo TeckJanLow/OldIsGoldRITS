@@ -18,10 +18,30 @@ public class Employee extends Person {
     private Job job;
     private long salary;
     
-    public Employee(String firstName, String lastName, int phone, String email, String street, String city, String state, int zipcode, Job job, long salary) {
+    public Employee(String firstName, String lastName, int phone, 
+            String email, String street, String city, String state, 
+            int zipcode, Job job, long salary) {
         super(firstName, lastName, phone, email, street, city, state, zipcode);
         this.job = job;
         this.salary = salary;
     }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
+    }
+
+    public long getSalary() {
+        return salary;
+    }
+
+    public void setSalary(long salary) {
+        this.salary = salary;
+    }
+    
+    
     
 }
