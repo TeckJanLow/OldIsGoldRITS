@@ -9,6 +9,7 @@ package oldisgoldrits.servlet;
 import java.io.IOException;
 
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,8 +40,11 @@ public class QueryInventory extends HttpServlet {
         
         
         Logger log = Logger.getLogger(getClass().getSimpleName());
-        log.info(title);
-        log.info(inventoryID);
+      
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/inventoryTable.jsp");
+        request.setAttribute("title", title);
+        requestDispatcher.forward(request, response);
+  
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

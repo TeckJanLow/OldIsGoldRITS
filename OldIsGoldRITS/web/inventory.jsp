@@ -4,7 +4,9 @@
     Author     : Dell
 --%>
 
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -40,7 +42,7 @@
                 </form>
             </div>
         </div>
-        
+        <jsp:include page="inventoryTable.jsp"></jsp:include>
     <div class="row" id = "progressBarOverview">
     <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
         <div class="progress">
@@ -51,94 +53,19 @@
         </div>
     </div></div>
         
-        <div id="page-wrap" style="display: none">
-
-            <table>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Job Title</th>
-                    <th>Favorite Color</th>
-                    <th>Wars or Trek?</th>
-
-                    <th>Date of Birth</th>
-                    <th>Dream Vacation City</th>
-                    <th>GPA</th>
-                    <th>Arbitrary Data</th>
-                </tr>
-                <tr>
-                    <td>James</td>
-                    <td>Matman</td>
-                    <td>Chief Sandwich Eater</td>
-                    <td>Lettuce Green</td>
-                    <td>Trek</td>
-
-                    <td>January 13, 1979</td>
-                    <td>Gotham City</td>
-                    <td>3.1</td>
-                    <td>RBX-12</td>
-                </tr>
-                <tr>
-                    <td>The</td>
-                    <td>Tick</td>
-                    <td>Crimefighter Sorta</td>
-                    <td>Blue</td>
-                    <td>Wars</td>
-
-                    <td>July 19, 1968</td>
-                    <td>Athens</td>
-                    <td>N/A</td>
-                    <td>Edlund, Ben (July 1996).</td>
-                </tr>
-                <tr>
-                    <td>Jokey</td>
-                    <td>Smurf</td>
-                    <td>Giving Exploding Presents</td>
-                    <td>Smurflow</td>
-                    <td>Smurf</td>
-
-                    <td>Smurfuary Smurfteenth, 1945</td>
-                    <td>New Smurf City</td>
-                    <td>4.Smurf</td>
-                    <td>One</td>
-                </tr>
-                <tr>
-                    <td>Cindy</td>
-                    <td>Beyler</td>
-                    <td>Sales Representative</td>
-                    <td>Red</td>
-                    <td>Wars</td>
-
-                    <td>July 5, 1956</td>
-                    <td>Paris</td>
-                    <td>3.4</td>
-                    <td>3451</td>
-                </tr>
-                <tr>
-                    <td>Captain</td>
-                    <td>Cool</td>
-                    <td>Tree Crusher</td>
-                    <td>Blue</td>
-                    <td>Wars</td>
-
-                    <td>December 13, 1982</td>
-                    <td>Las Vegas</td>
-                    <td>1.9</td>
-                    <td>Under the couch</td>
-                </tr>
-            </table>
-
-        </div>
+    
     </div>
 
     </body>
     <script>
        $(document).ready(function() {
            $('#inventoryForm').hide();
+           $('#page-wrap').hide();
            $('#progressBarOverview').hide();
            console.log('loaded inventory.jsp');
            $('#inventoryForm').fadeIn("slow");
            $('#mainContent').css('display','block');
+           
        }); 
         
         $('#search').click(function(){
@@ -156,9 +83,12 @@
             datatype: "application/json",
             success: function(data, textStatus, request){
                 $('#progressBarOverview').hide();
-                
+                console.log("data = " + data);
+                console.log("request = " + request);
+                $('#page-wrap').html(data);
                         $('#page-wrap').fadeIn("slow", function () {
                         $(this).show();
+                       
                     });},
                  error: function(xhr, ajaxOptions, thrownError) {
                 $('#progressBarOverview').hide();
