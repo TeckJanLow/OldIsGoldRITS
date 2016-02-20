@@ -65,6 +65,7 @@ public class ConnectionTestServlet extends HttpServlet {
       ResultSet rs = st.executeQuery(query);
             while(rs.next())
             {
+                
                 String firstName = rs.getString("first_name");
                 log.info(firstName);
             }
