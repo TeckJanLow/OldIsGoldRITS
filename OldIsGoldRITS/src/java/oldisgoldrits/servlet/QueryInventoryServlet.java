@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author madan
  */
 @WebServlet(name = "QueryInventory", urlPatterns = {"/QueryInventory"})
-public class QueryInventory extends HttpServlet {
+public class QueryInventoryServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
