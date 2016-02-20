@@ -13,10 +13,14 @@ package oldisgoldrits.model;
 public class Album {
     
     private int albumID;
-    private final String title;
-    private final String artist;
-    private final String genre;
+    private String title;
+    private String artist;
+    private String genre;
     private String comments;
+    
+    public Album() {
+        
+    }
     
     public Album(String title, String artist, String genre, String comments){
         

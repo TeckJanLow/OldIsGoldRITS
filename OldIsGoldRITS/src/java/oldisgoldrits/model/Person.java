@@ -18,6 +18,10 @@ public class Person {
     String email;
     Address address;
     
+    public Person() {
+        
+    }
+    
     public Person(String firstName, String lastName, int phone, String email, 
             String street, String city, String state, int zipcode) {
         this.firstName = firstName;

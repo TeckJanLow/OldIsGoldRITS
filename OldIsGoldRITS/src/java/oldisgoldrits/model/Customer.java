@@ -18,6 +18,10 @@ public class Customer extends Person {
     private PrefCommunication prefCommunication;
     private boolean isSubscribedMailingList;
     
+    public Customer() {
+        
+    }
+    
     public Customer(String firstName, String lastName, int phone, String email, 
             String street, String city, String state, int zipcode, 
             String prefCommunication, boolean isSubscribedMailingList) {

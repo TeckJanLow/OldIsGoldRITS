@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import oldisgoldrits.model.RequestTable;
 
 /**
  * Contains all methods involving the creation and manipulation of customer requests.
@@ -24,7 +26,7 @@ public class RequestHandler {
      * @return ResultSet containing all request information from the database
      * @throws SQLException 
      */
-    public ResultSet getRequest() throws SQLException {
+    public ArrayList<RequestTable> getRequest() throws SQLException {
         
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.connect();
@@ -36,8 +38,11 @@ public class RequestHandler {
                 + "REQUEST.cust_id = CUSTOMER.cust_id";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
+        RequestParser rp = new RequestParser();
+        ArrayList<RequestTable> requestList = rp.parse(rs);
+        rs.close();
         conn.close();
-        return rs;
+        return requestList;
     }
     
     /**

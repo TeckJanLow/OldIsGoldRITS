@@ -18,6 +18,10 @@ public class Employee extends Person {
     private Job job;
     private double salary;
     
+    public Employee() {
+        
+    }
+    
     public Employee(String firstName, String lastName, int phone, 
             String email, String street, String city, String state, 
             int zipcode, String job, double salary) {

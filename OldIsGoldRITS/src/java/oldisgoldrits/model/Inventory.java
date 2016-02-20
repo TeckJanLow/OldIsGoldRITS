@@ -24,7 +24,12 @@ public class Inventory {
     private double purchasePrice;
     private int albumID;
     
-    public Inventory(String quality, int quantityOnHand, double price, double purchasePrice) {
+    public Inventory() {
+        
+    }
+    
+    public Inventory(int inventoryID, String quality, int quantityOnHand, double price, double purchasePrice) {
+        this.inventoryID = inventoryID;
         this.quality = Quality.valueOf(quality);
         this.quantityOnHand = quantityOnHand;
         this.price = price;
