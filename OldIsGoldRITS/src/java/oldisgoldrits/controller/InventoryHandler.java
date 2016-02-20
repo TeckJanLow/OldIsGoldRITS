@@ -64,8 +64,8 @@ public class InventoryHandler {
      * @param purchasePrice The cost per unit of the item
      * @throws SQLException 
      */
-    public void addNewInventory(String quality, int quantityOnHand, long price, 
-            long purchasePrice) throws SQLException {
+    public void addNewInventory(String quality, int quantityOnHand, double price, 
+            double purchasePrice) throws SQLException {
         
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.connect();
@@ -87,7 +87,7 @@ public class InventoryHandler {
      * @throws SQLException 
      */
     public void editInventory(int inventoryID, String quality, String quantity, 
-            long price, long purchasePrice) throws SQLException {
+            double price, double purchasePrice) throws SQLException {
         
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.connect();

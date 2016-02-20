@@ -16,29 +16,30 @@ public class Employee extends Person {
         Manager, Cashier
     }
     private Job job;
-    private long salary;
+    private double salary;
     
     public Employee(String firstName, String lastName, int phone, 
             String email, String street, String city, String state, 
-            int zipcode, Job job, long salary) {
+            int zipcode, String job, double salary) {
         super(firstName, lastName, phone, email, street, city, state, zipcode);
-        this.job = job;
+        this.job = Job.valueOf(job);
         this.salary = salary;
     }
 
-    public Job getJob() {
+    public String getJob() {
+        String job = this.job.toString();
         return job;
     }
 
-    public void setJob(Job job) {
-        this.job = job;
+    public void setJob(String job) {
+        this.job = Job.valueOf(job);
     }
 
-    public long getSalary() {
+    public double getSalary() {
         return salary;
     }
 
-    public void setSalary(long salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
     

@@ -6,6 +6,8 @@
 
 package oldisgoldrits.model;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Teck Jan Low
@@ -18,12 +20,12 @@ public class Inventory {
     }
     private Quality quality;
     private int quantityOnHand;
-    private long price;
-    private long purchasePrice;
+    private double price;
+    private double purchasePrice;
     private int albumID;
     
-    public Inventory(Quality quality, int quantityOnHand, long price, long purchasePrice) {
-        this.quality = quality;
+    public Inventory(String quality, int quantityOnHand, double price, double purchasePrice) {
+        this.quality = Quality.valueOf(quality);
         this.quantityOnHand = quantityOnHand;
         this.price = price;
         this.purchasePrice = purchasePrice;
@@ -54,19 +56,19 @@ public class Inventory {
         this.quantityOnHand = quantityOnHand;
     }
 
-    public long getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public long getPurchasePrice() {
+    public double getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(long purchasePrice) {
+    public void setPurchasePrice(double purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
     
