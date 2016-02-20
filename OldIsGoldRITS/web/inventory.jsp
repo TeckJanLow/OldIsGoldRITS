@@ -59,6 +59,8 @@
     </body>
     <script>
        $(document).ready(function() {
+           $('li.active').removeClass('active');
+           $('#inventoryTab').addClass('active');
            $('#inventoryForm').hide();
            $('#page-wrap').hide();
            $('#progressBarOverview').hide();
@@ -100,6 +102,11 @@
     }); 
      
  
+
+   
+  
+
+
 
         
 

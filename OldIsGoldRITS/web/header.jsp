@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script src="js/jquery-2.1.4.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -19,9 +20,10 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="inventory">Inventory Manager</a></li>
-            <li><a href="request">Customer Request Manager</a></li>
+            <li id="inventoryTab" ><a href="inventory">Inventory Manager</a></li>
+            <li id="customerTab"><a href="request">Customer Request Manager</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+

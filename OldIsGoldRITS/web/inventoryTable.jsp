@@ -33,21 +33,12 @@
                     <td>3.1</td>
                     <td>RBX-12</td>
                 </tr>
-                  <tr>
-            <td>${title}</td> 
-            <td>${title}</td> 
-            <td>${title}</td>
-            <td>${title}</td> 
-            <td>${title}</td> 
-            <td>${title}</td>
-            <td>${title}</td> 
-            <td>${title}</td>
-            </tr> 
-            <c:forEach var="element" items="${listData}">
+                  
+            <c:forEach var="element" items="${inventory}">
             <tr>
-            <td>${title}</td> 
-            <td>${title}</td> 
-            <td>${title}</td>
+            <td>${element.quality}</td> 
+            <td>${element.quantity}</td> 
+            <td>${element.price}</td>
             <td>${title}</td> 
             <td>${title}</td> 
             <td>${title}</td>
