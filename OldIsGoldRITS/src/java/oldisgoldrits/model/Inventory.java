@@ -26,12 +26,48 @@ public class Inventory {
         this.quantityOnHand = quantityOnHand;
         this.price = price;
     }
-    
-    @Override
-    public String toString() {
-        String output;
-        output = String.format("%5s%5s%5s%10s%5s", this.inventoryID, this.quality, this.quantityOnHand, this.price, this.albumID);
-        return output;
+
+    public int getInventoryID() {
+        return inventoryID;
     }
+
+    public void setInventoryID(int inventoryID) {
+        this.inventoryID = inventoryID;
+    }
+
+    public String getQuality() {
+        String quality = this.quality.toString();
+        return quality;
+    }
+
+    public void setQuality(String quality) {
+        this.quality = Quality.valueOf(quality);
+    }
+
+    public int getQuantityOnHand() {
+        return quantityOnHand;
+    }
+
+    public void setQuantityOnHand(int quantityOnHand) {
+        this.quantityOnHand = quantityOnHand;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public int getAlbumID() {
+        return albumID;
+    }
+
+    public void setAlbumID(int albumID) {
+        this.albumID = albumID;
+    }
+    
+    
     
 }

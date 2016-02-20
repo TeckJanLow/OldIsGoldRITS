@@ -74,12 +74,12 @@ public class QueryHandler {
         conn.close();
     }
     
-    public void addNewInventory(String title, String artist, String genre, 
+    public void addNewRecord(String title, String artist, String genre, 
             String comments) throws SQLException{
         
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.connect();
-        String query = "INSERT INTO INVENTORY (title, artist, genre, comments)"
+        String query = "INSERT INTO RECORD (title, artist, genre, comments)"
                 + "VALUES (" + title + ", " + artist + ", " + genre + ", " 
                 + comments + ");";
         Statement st = conn.createStatement();
@@ -87,5 +87,34 @@ public class QueryHandler {
         conn.close();
     }
     
+    public void addNewCustomer(String firstName, String lastName, int phone, 
+            String email, String street, String city, String state, int zipcode, 
+            String prefCommunication, boolean isSubscribedMailingList) 
+            throws SQLException {
+        
+        DatabaseConnector dbc = new DatabaseConnector();
+        Connection conn = dbc.connect();
+        String query = "INSERT INTO CUSTOMER (first_name, last_name, phone, "
+                + "email, street, city, state, zip, preferred_mode, "
+                + "is_subscribed) VALUES (" + firstName + ", " + lastName + ", " 
+                + phone + ", " + email + ", " + street + ", " + city + ", " 
+                + state + ", " + zipcode + ", " + prefCommunication + ", " 
+                + isSubscribedMailingList + ");";
+        Statement st = conn.createStatement();
+        st.executeUpdate(query);
+        conn.close();
+    }
+    
+    public void addNewInventory(String quality, int quantityOnHand, long price) 
+            throws SQLException {
+        
+        DatabaseConnector dbc = new DatabaseConnector();
+        Connection conn = dbc.connect();
+        String query = "INSERT INTO INVENTORY (quality, quantity, price) VALUES"
+                + " (" + quality + ", " + quantityOnHand + ", " + price + ");";
+        Statement st = conn.createStatement();
+        st.executeUpdate(query);
+        conn.close();
+    }
     
 }
