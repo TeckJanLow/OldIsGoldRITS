@@ -1,8 +1,4 @@
-
-
-
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300);
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -232,32 +228,3 @@ form button:hover {
             transform: translateY(-700px) rotate(600deg);
   }
 }
-
-#page-wrap {
-	margin: 50px;
-}
-p {
-	margin: 20px 0; 
-}
-
-	/* 
-	Generic Styling, for Desktops/Laptops 
-	*/
-	table { 
-		width: 100%; 
-		border-collapse: collapse; 
-	}
-	/* Zebra striping */
-	tr:nth-of-type(odd) { 
-		background: #eee; 
-	}
-	th { 
-		background: #333; 
-		color: white; 
-		font-weight: bold; 
-	}
-	td, th { 
-		padding: 6px; 
-		border: 1px solid #ccc; 
-		text-align: left; 
-	}
