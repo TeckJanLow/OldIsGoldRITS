@@ -10,7 +10,7 @@ package oldisgoldrits.model;
  *
  * @author Teck Jan Low
  */
-public class Record {
+public class Album {
     
     private int albumID;
     private final String title;
@@ -18,7 +18,7 @@ public class Record {
     private final String genre;
     private String comments;
     
-    public Record(String title, String artist, String genre, String comments){
+    public Album(String title, String artist, String genre, String comments){
         
         this.title = title;
         this.artist = artist;

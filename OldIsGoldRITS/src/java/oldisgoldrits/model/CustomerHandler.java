@@ -5,6 +5,9 @@
  */
 package oldisgoldrits.model;
 
+import java.sql.SQLException;
+import oldisgoldrits.controller.QueryHandler;
+
 /**
  *
  * @author Teck Jan Low
@@ -15,14 +18,29 @@ public class CustomerHandler {
             int phone, String email, String street, String city, String state,
             int zipcode, String prefCommunication,
             boolean isSubscribedMailingList) {
-        Customer customer = new Customer(firstName, lastName, phone, email,
-                street, city, state, zipcode, prefCommunication, 
-                isSubscribedMailingList);
-        // ADD CUSTOMER TO DATABASE
+        
+        QueryHandler qh = new QueryHandler();
+        try {
+            qh.addNewCustomer(firstName, lastName, phone, email, street, city,
+                    state, zipcode, prefCommunication, isSubscribedMailingList);
+        } catch (SQLException sql) {
+            // EXCEPTION HANDLING HERE
+        }
+        
     }
 
-    public void editCustomer() {
-        
+    public void editCustomer(int customerID, String firstName, String lastName,
+            int phone, String email, String street, String city, String state,
+            int zipcode, String prefCommunication,
+            boolean isSubscribedMailingList) {
+
+        QueryHandler qh = new QueryHandler();
+        try {
+            qh.editCustomer(customerID, firstName, lastName, phone, email, street, city,
+                    state, zipcode, prefCommunication, isSubscribedMailingList);
+        } catch (SQLException sql) {
+            // EXCEPTION HANDLING HERE
+        }
     }
 
 }
