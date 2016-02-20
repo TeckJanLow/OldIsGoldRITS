@@ -29,7 +29,7 @@ public class InventoryHandler {
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.connect();
         String query = "SELECT INVENTORY.*, ALBUM.title, ALBUM.artist, "
-                + "ALBUM.genre, ALBUM.comments FROM INVENTORY LEFT JOIN ALBUM "
+                + "ALBUM.genre, ALBUM.comment FROM INVENTORY LEFT JOIN ALBUM "
                 + "ON INVENTORY.album_id = ALBUM.album_id";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
@@ -48,7 +48,7 @@ public class InventoryHandler {
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.connect();
         String query = "SELECT INVENTORY.*, ALBUM.title, ALBUM.artist, "
-                + "ALBUM.genre, ALBUM.comments FROM INVENTORY LEFT JOIN ALBUM "
+                + "ALBUM.genre, ALBUM.comment FROM INVENTORY LEFT JOIN ALBUM "
                 + "ON INVENTORY.album_id = ALBUM.album_id WHERE " + condition;
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);

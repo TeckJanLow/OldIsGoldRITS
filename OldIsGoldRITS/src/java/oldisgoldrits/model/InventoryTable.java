@@ -11,5 +11,23 @@ package oldisgoldrits.model;
  * @author Teck Jan Low
  */
 public class InventoryTable {
+    
+    private Inventory inventory;
+    private Album album;
+    
+    public InventoryTable(Inventory inventory, Album album) {
+        this.inventory = inventory;
+        this.album = album;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
+    
+    
 
 }
