@@ -11,23 +11,24 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
+ * Contains all methods involving the creation and manipulation of customers.
  * @author Teck Jan Low
+ * @version 1.0
  */
 public class CustomerHandler {
 
    /**
-     * 
-     * @param firstName
-     * @param lastName
-     * @param phone
-     * @param email
-     * @param street
-     * @param city
-     * @param state
-     * @param zipcode
-     * @param prefCommunication
-     * @param isSubscribedMailingList
+     * Adds a new customer to the database.
+     * @param firstName The customer's first name
+     * @param lastName The customer's last name
+     * @param phone The customer's phone number
+     * @param email The customer's email address
+     * @param street The customer's street address
+     * @param city The customer's city of residence
+     * @param state The customer's state of residence
+     * @param zipcode The customer's zip code
+     * @param prefCommunication The customer's preferred method of communication
+     * @param isSubscribedMailingList Subscription status to the mailing list
      * @throws SQLException 
      */
     public void addNewCustomer(String firstName, String lastName, int phone, 
@@ -48,6 +49,21 @@ public class CustomerHandler {
         conn.close();
     }
 
+    /**
+     * Edits customer information on the database.
+     * @param customerID The ID of the customer to be edited
+     * @param firstName The new customer first name
+     * @param lastName The new customer last name
+     * @param phone The new customer phone number
+     * @param email The new customer email address
+     * @param street The new customer street address
+     * @param city The new customer city of residence
+     * @param state The new customer state of residence
+     * @param zipcode The new customer zip code
+     * @param prefCommunication The new customer preferred method of communication
+     * @param isSubscribedMailingList The new customer mailing list subscription status
+     * @throws SQLException 
+     */
     public void editCustomer(int customerID, String firstName, String lastName,
             int phone, String email, String street, String city, String state,
             int zipcode, String prefCommunication,
@@ -67,6 +83,11 @@ public class CustomerHandler {
         conn.close();
     }
     
+    /**
+     * Deletes a customer from the database.
+     * @param customerID The ID of the customer to be deleted
+     * @throws SQLException 
+     */
     public void deleteCustomer(int customerID) throws SQLException {
         
         DatabaseConnector dbc = new DatabaseConnector();

@@ -19,12 +19,14 @@ public class Inventory {
     private Quality quality;
     private int quantityOnHand;
     private long price;
+    private long purchasePrice;
     private int albumID;
     
-    public Inventory(Quality quality, int quantityOnHand, long price) {
+    public Inventory(Quality quality, int quantityOnHand, long price, long purchasePrice) {
         this.quality = quality;
         this.quantityOnHand = quantityOnHand;
         this.price = price;
+        this.purchasePrice = purchasePrice;
     }
 
     public int getInventoryID() {
@@ -60,6 +62,14 @@ public class Inventory {
         this.price = price;
     }
 
+    public long getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public void setPurchasePrice(long purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+    
     public int getAlbumID() {
         return albumID;
     }
