@@ -27,8 +27,18 @@
             <div class="col-md-12 col-md-offset-4">
                 <form class="form-inline">
                     <div class="form-group">
-                        <label class="sr-only" for="inventoryID">SKU</label>
-                        <input type="text" class="form-control" id="sku" placeholder="SKU">
+                        
+                        <div class="btn-group">
+  <button id="btnStatus" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select Status <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Pending</a></li>
+    <li><a href="#">Completed</a></li>
+     <li role="separator" class="divider"></li>
+    <li><a href="#">Show All</a></li>
+  </ul>
+</div>
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="albumTitle">Title</label>
@@ -42,8 +52,7 @@
                 </form>
             </div>
         </div>
-        <jsp:include page="requestTable.jsp"></jsp:include>
-    <div class="row" id = "progressBarOverview">
+                <div class="row" id = "progressBarOverview">
     <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
         <div class="progress">
             <div class="progress-bar progress-bar-striped active" role="progressbar"
@@ -52,6 +61,8 @@
             </div>
         </div>
     </div></div>
+        <jsp:include page="requestTable.jsp"></jsp:include>
+
         
     
     </div>
@@ -64,23 +75,41 @@
            $('#requestForm').hide();
            $('#page-wrap').hide();
            $('#progressBarOverview').hide();
-           console.log('loaded inventory.jsp');
+           console.log('loaded request.jsp');
            $('#requestForm').fadeIn("slow");
            $('#mainContent').css('display','block');
-           
-       }); 
-        
+           statusText = '';
+           $('.dropdown-menu a').click(function(e){
+           $('#btnStatus').html(this.innerHTML +' <span class="caret"></span>');
+           statusText = this.innerHTML;
+            });
+            
         $('#search').click(function(){
+            
+        $('#page-wrap').hide();   
         $('#progressBarOverview').show();
+        status = '';
+           if(statusText === 'Completed')
+           {
+               status = true;
+           }
+           else if (statusText==='Pending')
+           {
+               status = false;
+           }
+           else
+           {
+               status='';
+           }
        
-        console.log("search button clicked!");
-        sku = $('#sku').val();
+        console.log('status ='+status);
+        
         title = $('#title').val();
         
         $.ajax({
             type: "POST",
             url: "QueryRequest",
-            data: {inventoryID:sku, title:title},
+            data: {status:status, title:title},
             cache: false,
             datatype: "application/json",
             success: function(data, textStatus, request){
@@ -100,6 +129,9 @@
         });
          
     }); 
+       }); 
+        
+       
      
  
 

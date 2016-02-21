@@ -57,12 +57,25 @@ public class QueryRequestServlet extends HttpServlet {
         }
         
         }
+        else if((status == null || status.equals("")) && (!title.trim().equals("")))
+        {
+            try {
+                String condition = "REQUEST.description like \"%"+title+"%\";";
+                log.info(condition);
+                ArrayList<RequestTable> requestList = requestHandler.getRequest(condition);
+                
+            request.setAttribute("requestList", requestList);
+            } catch (SQLException ex) {
+                Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         else
         {
             try {
-                String condition = "REQUEST.status="+status;
+                String condition = "REQUEST.status="+status+" and REQUEST.description like \"%"+title+"%\";";
+                log.info(condition);
                 ArrayList<RequestTable> requestList = requestHandler.getRequest(condition);
-                log.info(requestList.get(0).getRequest().getDescription());
+                
             request.setAttribute("requestList", requestList);
             } catch (SQLException ex) {
                 Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);

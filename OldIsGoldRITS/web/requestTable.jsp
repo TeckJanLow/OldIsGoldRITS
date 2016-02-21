@@ -6,13 +6,17 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <div id="page-wrap">
 
             <table>
                 <tr>
                     <th>Request ID</th>
                     <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Date</th>
                     <th>Customer</th>
+                    <th>Contact</th>
                     <th>Status</th>
                    
                 </tr>
@@ -22,7 +26,19 @@
             <tr>
             <td>${element.request.requestID}</td> 
             <td>${element.request.description}</td> 
+            <td>${element.request.quantity}</td> 
+            <td><fmt:formatDate value="${element.request.date}" pattern="MMM DD, YYYY"></fmt:formatDate></td>
             <td>${element.customer.firstName} ${element.customer.lastName}</td> 
+            <td>
+                <c:choose>
+                    <c:when test="${element.customer.prefCommunication eq 'email'}">
+                        ${element.customer.email}
+                    </c:when>
+                    <c:otherwise>
+                        ${element.customer.phone}
+                    </c:otherwise>
+                </c:choose>
+            </td>
             <td><c:choose><c:when test="${element.request.isComplete == 'true'}"><span style="color:#00b300">Complete</span>
                     </c:when>
                     <c:otherwise><span style="color:#e50000">
