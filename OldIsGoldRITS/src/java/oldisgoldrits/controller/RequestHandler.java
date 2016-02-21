@@ -55,20 +55,25 @@ public class RequestHandler {
      * @return returns a ResultSet containing the data from the query.
      * @throws SQLException 
      */
-    public ResultSet getRequest(String condition) throws SQLException {
+    public ArrayList<RequestTable> getRequest(String condition) throws SQLException {
         
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.connect();
         String query = "SELECT REQUEST.*, CUSTOMER.first_name cust_first, "
                 + "CUSTOMER.last_name cust_last, CUSTOMER.phone, CUSTOMER.email,"
                 + " CUSTOMER.preferred_mode, EMPLOYEE.first_name emp_first, "
-                + "EMPLOYEE.last_name emp_last FROM REQUEST LEFT JOIN EMPLOYEE "
-                + "ON REQUEST.emp_id = EMPLOYEE.emp_id LEFT JOIN CUSTOMER ON"
-                + "REQUEST.cust_id = CUSTOMER.cust_id WHERE " + condition;
+                + " EMPLOYEE.last_name emp_last FROM REQUEST LEFT JOIN EMPLOYEE "
+                + " ON REQUEST.emp_id = EMPLOYEE.emp_id LEFT JOIN CUSTOMER ON"
+                + " REQUEST.cust_id = CUSTOMER.cust_id WHERE " + condition;
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
+       
+        RequestParser rp = new RequestParser();
+        
+        ArrayList<RequestTable> requestList = rp.parse(rs);
+        rs.close();
         conn.close();
-        return rs;
+        return requestList;
     }
 
     /**

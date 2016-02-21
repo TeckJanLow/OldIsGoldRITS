@@ -39,19 +39,34 @@ public class QueryRequestServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        response.setContentType("text/html;charset=UTF-8");
-        String inventoryID = request.getParameter("inventoryID");
+        String status = request.getParameter("status");
         String title = request.getParameter("title");
         
         
         Logger log = Logger.getLogger(getClass().getSimpleName());
       
         RequestHandler requestHandler = new RequestHandler();
+        if((status == null || status.equals("")) && (title == null || title.equals("")))
+        {
         try {
             ArrayList<RequestTable> requestList = requestHandler.getRequest();
             log.info(requestList.get(0).getRequest().getDescription());
             request.setAttribute("requestList", requestList);
         } catch (SQLException ex) {
             Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        }
+        else
+        {
+            try {
+                String condition = "REQUEST.status="+status;
+                ArrayList<RequestTable> requestList = requestHandler.getRequest(condition);
+                log.info(requestList.get(0).getRequest().getDescription());
+            request.setAttribute("requestList", requestList);
+            } catch (SQLException ex) {
+                Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
        
