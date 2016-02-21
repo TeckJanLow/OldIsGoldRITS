@@ -52,8 +52,8 @@
             <c:set var="description" value="${element.request.description}"/>
             <c:set var="firstName" value="${element.customer.firstName}"/>
             <c:set var="lastName" value="${element.customer.lastName}"/>
-          
-            <td><a data-toggle="modal" data-target="#myModal" id ="${element.request.requestID}" href="#" onclick="openEdit('${id}','${description}','${firstName}','${lastName}');"><span class="glyphicon glyphicon-edit"></span></a></td>
+            <c:set var="isCompleted" value="${element.request.isComplete}"/>
+            <td><a data-toggle="modal" data-target="#myModal" id ="${element.request.requestID}" href="#" onclick="openEdit('${id}','${description}','${firstName}','${lastName}', '${isCompleted}');"><span class="glyphicon glyphicon-edit"></span></a></td>
             </tr> 
             </c:forEach>
             </table>
@@ -68,6 +68,16 @@
         <h4 class="modal-title" id="myModalLabel">Edit Request</h4>
       </div>
       <div class="modal-body">
+          <div class="row" id = "progressBarOverviewModal" hidden="true">
+    <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar"
+                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                Loading
+            </div>
+        </div>
+    </div></div>
+          <div id ="updateStatus"></div>
         <form class="form-horizontal">
   <div class="form-group">
     
@@ -77,26 +87,98 @@
   </div>
   <div class="form-group">
        <div class="col-sm-10 col-sm-offset-1">
-      <input type="description" class="form-control" id="description" >
+      <input type="text" class="form-control" id="description" >
     </div>
+  </div>
+  <div class="form-group">
+       <div class="col-sm-10 col-sm-offset-1">
+      <input type="text" class="form-control" id="firstName" >
+    </div>
+  </div>
+   <div class="form-group">
+       <div class="col-sm-10 col-sm-offset-1">
+      <input type="text" class="form-control" id="lastName" >
+    </div>
+  </div> 
+   <div class="checkbox col-sm-offset-1">
+    <label>
+      <input type="checkbox" id="statusCheck"> Completed
+    </label>
   </div>
   
   
 </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button id="closeButton" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="updateButton" type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
+      </div>
 </div>
     <script>
-        function openEdit(identity, description, firstName, lastName)
+        function openEdit(identity, description, firstName, lastName, statusCheck)
         {
-            $('#requestID').attr("placeholder", identity);
+            $('#requestID').val(identity);
             $('#description').attr('placeholder', "Description");
             $('#description').val(description);
+            $('#firstName').attr('placeholder', "Customer First Name");
+            $('#firstName').val(firstName);
+            $('#lastName').attr('placeholder', "Customer Last Name");
+            $('#lastName').val(lastName); 
+            if(statusCheck === 'true')
+            {
+                $('#statusCheck').prop("checked", true);
+            }
+            else
+            {
+                $('#statusCheck').prop("checked", false);
+            }
         }
+        
+        $.ready(function(){
+            $('#progressBarOverviewModal').hide();
+        });
+        
+        $('#closeButton').click(function(){
+            $('#progressBarOverviewModal').hide();
+            $('.form-horizontal').show();
+             $('#updateStatus').html('');
+             $('#search').trigger('click');
+        });
+           
+            $('#updateButton').click(function(){
+                $('#progressBarOverviewModal').show();
+                console.log("save changes");
+                requestID = $('#requestID').val();
+                description = $('#description').val();
+                firstName = $('#firstName').val();
+                lastName = $('#lastName').val();
+                status = $("#statusCheck").is(':checked');
+                $('.form-horizontal').hide();
+                console.log(requestID);
+            $.ajax({
+            type: "POST",
+            url: "QueryRequest",
+            data: {requestID:requestID, description:description, firstName:firstName, lastName:lastName, status:status, update:true},
+            cache: false,
+            datatype: "application/json",
+            success: function(data, textStatus, request){
+                $('#progressBarOverviewModal').hide();
+                $('#updateStatus').html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> Record updated successfully</div>');
+                
+                
+                    },
+                 error: function(xhr, ajaxOptions, thrownError) {
+                $('#progressBarOverviewModal').hide();
+                console.log(xhr.status);
+                console.log(thrownError);}
+         
+        });
+            
+            
+        });
+        
     </script>
 

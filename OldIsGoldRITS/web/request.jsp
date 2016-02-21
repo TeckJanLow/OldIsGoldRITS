@@ -85,7 +85,7 @@
             });
             
         $('#search').click(function(){
-            
+            console.log('search clicked');
         $('#page-wrap').hide();   
         $('#progressBarOverview').show();
         status = '';
@@ -114,8 +114,7 @@
             datatype: "application/json",
             success: function(data, textStatus, request){
                 $('#progressBarOverview').hide();
-                console.log("data = " + data);
-                console.log("request = " + request);
+                
                 $('#page-wrap').html(data);
                         $('#page-wrap').fadeIn("slow", function () {
                         $(this).show();

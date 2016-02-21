@@ -41,9 +41,16 @@ public class QueryRequestServlet extends HttpServlet {
 //        response.setContentType("text/html;charset=UTF-8");
         String status = request.getParameter("status");
         String title = request.getParameter("title");
-        
-        
+        Boolean update = Boolean.valueOf(request.getParameter("update"));
         Logger log = Logger.getLogger(getClass().getSimpleName());
+        log.info("Update: "+update+ "param update: "+ request.getParameter("update") );
+        if(update)
+        {
+            
+            runUpdate(request,response);
+        }
+        else{
+        
       
         RequestHandler requestHandler = new RequestHandler();
         if((status == null || status.equals("")) && (title == null || title.equals("")))
@@ -82,8 +89,9 @@ public class QueryRequestServlet extends HttpServlet {
             }
         }
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
-       
+        
         requestDispatcher.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -124,5 +132,26 @@ public class QueryRequestServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void runUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        Integer requestID = Integer.parseInt(request.getParameter("requestID"));
+        String firstName = request.getParameter("firstName").trim();
+        String lastName = request.getParameter("lastName").trim();
+        String description = request.getParameter("description").trim();
+        Boolean status = Boolean.valueOf(request.getParameter("status"));
+        
+        RequestHandler requestHandler = new RequestHandler();
+        Logger log = Logger.getLogger(getClass().getSimpleName());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
+        log.log(Level.INFO, "Request {0} status = {1}", new Object[]{requestID, status});
+        try {
+            requestHandler.editRequest(requestID, description, 1, status);
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        requestDispatcher.forward(request, response);
+        
+    }
 
 }

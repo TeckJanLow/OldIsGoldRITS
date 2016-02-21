@@ -114,9 +114,11 @@ public class RequestHandler {
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.connect();
         String query = "UPDATE REQUEST SET description = '" + description 
-                + "', quantity = '" + quantity + "', status = '" 
-                + isComplete + "' WHERE request_id = '" + requestID + "'";
+                + "', quantity = '" + quantity + "', status = " 
+                + isComplete + " WHERE request_id = '" + requestID + "'";
         Statement st = conn.createStatement();
+        Logger log  = Logger.getLogger(getClass().getSimpleName());
+        log.info(query);
         st.executeUpdate(query);
         conn.close();
     }
