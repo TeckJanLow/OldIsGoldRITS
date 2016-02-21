@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import oldisgoldrits.model.RequestTable;
+import org.jboss.logging.Logger;
 
 /**
  * Contains all methods involving the creation and manipulation of customer requests.
@@ -35,10 +36,13 @@ public class RequestHandler {
                 + " CUSTOMER.preferred_mode, EMPLOYEE.first_name emp_first, "
                 + "EMPLOYEE.last_name emp_last FROM REQUEST LEFT JOIN EMPLOYEE "
                 + "ON REQUEST.emp_id = EMPLOYEE.emp_id LEFT JOIN CUSTOMER ON"
-                + "REQUEST.cust_id = CUSTOMER.cust_id";
+                + " REQUEST.cust_id = CUSTOMER.cust_id";
         Statement st = conn.createStatement();
+        Logger log  = Logger.getLogger(getClass().getSimpleName());
+        log.info(query);
         ResultSet rs = st.executeQuery(query);
         RequestParser rp = new RequestParser();
+        
         ArrayList<RequestTable> requestList = rp.parse(rs);
         rs.close();
         conn.close();

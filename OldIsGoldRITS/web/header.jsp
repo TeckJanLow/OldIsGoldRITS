@@ -21,7 +21,7 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li id="inventoryTab" ><a href="inventory">Inventory Manager</a></li>
-            <li id="customerTab"><a href="request">Customer Request Manager</a></li>
+            <li id="requestTab"><a href="request">Customer Request Manager</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

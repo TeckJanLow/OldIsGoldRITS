@@ -5,9 +5,11 @@
  */
 package oldisgoldrits.servlet;
 
-
 import java.io.IOException;
-
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,13 +17,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import oldisgoldrits.controller.RequestHandler;
+import oldisgoldrits.model.RequestTable;
 
 /**
  *
  * @author madan
  */
-@WebServlet(name = "QueryInventoryServlet", urlPatterns = {"/QueryInventory"})
-public class QueryInventoryServlet extends HttpServlet {
+@WebServlet(name = "QueryRequestServlet", urlPatterns = {"/QueryRequest"})
+public class QueryRequestServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,17 +38,24 @@ public class QueryInventoryServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+//        response.setContentType("text/html;charset=UTF-8");
         String inventoryID = request.getParameter("inventoryID");
         String title = request.getParameter("title");
         
         
         Logger log = Logger.getLogger(getClass().getSimpleName());
       
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/inventoryTable.jsp");
-        request.setAttribute("title", title);
+        RequestHandler requestHandler = new RequestHandler();
+        try {
+            ArrayList<RequestTable> requestList = requestHandler.getRequest();
+            log.info(requestList.get(0).getRequest().getDescription());
+            request.setAttribute("requestList", requestList);
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
+       
         requestDispatcher.forward(request, response);
-  
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
