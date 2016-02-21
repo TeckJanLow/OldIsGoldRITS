@@ -6,8 +6,6 @@
 
 package oldisgoldrits.model;
 
-import java.text.DecimalFormat;
-
 /**
  *
  * @author Teck Jan Low
@@ -28,12 +26,13 @@ public class Inventory {
         
     }
     
-    public Inventory(int inventoryID, String quality, int quantityOnHand, double price, double purchasePrice) {
+    public Inventory(int inventoryID, String quality, int quantityOnHand, double price, double purchasePrice, int albumID) {
         this.inventoryID = inventoryID;
         this.quality = Quality.valueOf(quality);
         this.quantityOnHand = quantityOnHand;
         this.price = price;
         this.purchasePrice = purchasePrice;
+        this.albumID = albumID;
     }
 
     public int getInventoryID() {
