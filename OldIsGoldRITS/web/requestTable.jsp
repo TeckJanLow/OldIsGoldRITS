@@ -145,6 +145,7 @@
             $('#progressBarOverviewModal').hide();
             $('.form-horizontal').show();
              $('#updateStatus').html('');
+             $('#updateButton').hide();
              $('#search').trigger('click');
         });
            
@@ -168,12 +169,13 @@
                 $('#progressBarOverviewModal').hide();
                 $('#updateStatus').html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> Record updated successfully</div>');
                 
-                
+                $('#updateButton').hide();
                     },
                  error: function(xhr, ajaxOptions, thrownError) {
                 $('#progressBarOverviewModal').hide();
                 console.log(xhr.status);
-                console.log(thrownError);}
+                console.log(thrownError);
+            $('#updateButton').hide();}
          
         });
             
