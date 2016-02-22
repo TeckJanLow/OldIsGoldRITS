@@ -7,8 +7,12 @@ package oldisgoldrits.controller;
 
 import config.DatabaseConnector;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import oldisgoldrits.model.Customer;
+import org.jboss.logging.Logger;
 
 /**
  * Contains all methods involving the creation and manipulation of customers.
@@ -98,5 +102,23 @@ public class CustomerHandler {
         st.executeUpdate(query);
         conn.close();
     }
-
+    
+    public ArrayList<Customer> showAllCustomer() throws SQLException {
+        
+        DatabaseConnector dbc = new DatabaseConnector();
+        try (Connection conn = dbc.connect()) {
+            String query = "SELECT first_name, last_name, cust_id FROM CUSTOMER ORDER BY last_name ASC" ;
+            
+            Statement st = conn.createStatement();
+            Logger log  = Logger.getLogger(getClass().getSimpleName());
+            log.info(query);
+            RequestParser rp = new RequestParser();
+            ResultSet rs = st.executeQuery(query);
+            ArrayList<Customer> requestList = rp.parseCustomer(rs);
+            rs.close();
+            conn.close();
+            return requestList;
+        }
+    }
+    
 }

@@ -59,5 +59,30 @@ public class RequestParser {
         return requestList;
         
     }
+    
+    
+        public ArrayList<Customer> parseCustomer (ResultSet rs) throws SQLException {
+        
+        ArrayList<Customer> requestList = new ArrayList();
+        
+        while (rs.next()) {
+            
+            int customerID = rs.getInt("cust_id");
+      
+            String customerFirst = rs.getString("first_name");
+            String customerLast = rs.getString("last_name");
+           
+            
+            Customer customer = new Customer();
+            customer.setFirstName(customerFirst);
+            customer.setLastName(customerLast);
+            customer.setId(customerID);
+            
+            requestList.add(customer);
+        }
+        
+        return requestList;
+        
+    }
 
 }

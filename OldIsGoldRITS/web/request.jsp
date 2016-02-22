@@ -49,6 +49,10 @@
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                         Search
                     </a>
+                   <a id="addNewRequest" data-toggle="modal" data-target="#addNewRequestModal" class="btn btn-primary col-md-offset-2" >
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        Add New Request
+                    </a>
                 </form>
             </div>
         </div>
@@ -63,7 +67,56 @@
     </div></div>
         <jsp:include page="requestTable.jsp"></jsp:include>
 
-        
+         <div class="modal fade" id="addNewRequestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add New Request</h4>
+      </div>
+      <div class="modal-body">
+          <div class="row" id = "progressBarOverviewModalAdd" hidden="true">
+    <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar"
+                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                Please Wait...
+            </div>
+        </div>
+    </div></div>
+          <div id ="updateStatusAdd"></div>
+          <form id="addForm" class="form-horizontal" hidden="true">
+
+  <div class="form-group">
+       <div class="col-sm-10 col-sm-offset-1">
+      <input type="text" class="form-control" id="description" >
+    </div>
+  </div>
+  <div class="form-group">
+       <div class="col-sm-10 col-sm-offset-1">
+      <input type="number" min="1" class="form-control" id="quantity" >
+    </div>
+  </div>
+            <div class="form-group">
+       <div class="col-sm-10 col-sm-offset-1">
+            <div id="customerList"> <jsp:include page="customerList.jsp"></jsp:include></div>
+            </div></div>     
+       <div class="checkbox col-sm-offset-1">
+    <label>
+      <input type="checkbox" id="statusCheck"> Completed
+    </label>
+  </div>
+  
+  
+</form>
+      </div>
+      <div class="modal-footer">
+        <button id="closeButton" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="updateButton" type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+      </div>
     
     </div>
 
@@ -128,6 +181,33 @@
         });
          
     }); 
+    
+    $('#addNewRequest').click(function(){
+        
+        $('#progressBarOverviewModalAdd').show();
+        
+        console.log('add new request button clicked!');
+                $.ajax({
+            type: "POST",
+            url: "QueryPerson",
+            data: {},
+            cache: false,
+            datatype: "application/json",
+            success: function(data, textStatus, request){
+                $('#progressBarOverviewModalAdd').hide();
+                $('#customerList').html(data);
+                $('#addForm').show();
+                console.log(data);
+                
+               },
+                 error: function(xhr, ajaxOptions, thrownError) {
+                $('#progressBarOverviewModalAdd').hide();
+                console.log(xhr.status);
+                console.log(thrownError);}
+         
+        });
+        
+    });
        }); 
         
        

@@ -22,7 +22,7 @@ import oldisgoldrits.model.RequestTable;
 
 /**
  *
- * @author madan
+ * @author madan parameswaran
  */
 @WebServlet(name = "QueryRequestServlet", urlPatterns = {"/QueryRequest"})
 public class QueryRequestServlet extends HttpServlet {
