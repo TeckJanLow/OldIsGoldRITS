@@ -50,10 +50,9 @@
             </td>
             <c:set var="id" value="${element.request.requestID}"/>
             <c:set var="description" value="${element.request.description}"/>
-            <c:set var="firstName" value="${element.customer.firstName}"/>
-            <c:set var="lastName" value="${element.customer.lastName}"/>
+            <c:set var="quantity" value="${element.request.quantity}"/>
             <c:set var="isCompleted" value="${element.request.isComplete}"/>
-            <td><a data-toggle="modal" data-target="#myModal" id ="${element.request.requestID}" href="#" onclick="openEdit('${id}','${description}','${firstName}','${lastName}', '${isCompleted}');"><span class="glyphicon glyphicon-edit"></span></a></td>
+            <td><a data-toggle="modal" data-target="#myModal" id ="${element.request.requestID}" href="#" onclick="openEdit('${id}','${description}','${quantity}','${isCompleted}');"><span class="glyphicon glyphicon-edit"></span></a></td>
             </tr> 
             </c:forEach>
             </table>
@@ -92,14 +91,10 @@
   </div>
   <div class="form-group">
        <div class="col-sm-10 col-sm-offset-1">
-      <input type="text" class="form-control" id="firstName" >
+      <input type="number" min="1" class="form-control" id="quantity" >
     </div>
   </div>
-   <div class="form-group">
-       <div class="col-sm-10 col-sm-offset-1">
-      <input type="text" class="form-control" id="lastName" >
-    </div>
-  </div> 
+
    <div class="checkbox col-sm-offset-1">
     <label>
       <input type="checkbox" id="statusCheck"> Completed
@@ -118,15 +113,14 @@
       </div>
 </div>
     <script>
-        function openEdit(identity, description, firstName, lastName, statusCheck)
+        function openEdit(identity, description, quantity, statusCheck)
         {
             $('#requestID').val(identity);
             $('#description').attr('placeholder', "Description");
             $('#description').val(description);
-            $('#firstName').attr('placeholder', "Customer First Name");
-            $('#firstName').val(firstName);
-            $('#lastName').attr('placeholder', "Customer Last Name");
-            $('#lastName').val(lastName); 
+            $('#quantity').attr('placeholder', "Quantity");
+            $('#quantity').val(quantity);
+            
             if(statusCheck === 'true')
             {
                 $('#statusCheck').prop("checked", true);
@@ -154,15 +148,20 @@
                 console.log("save changes");
                 requestID = $('#requestID').val();
                 description = $('#description').val();
-                firstName = $('#firstName').val();
-                lastName = $('#lastName').val();
+                quantity = $('#quantity').val();
+                if(quantity === '')
+                {
+                    quantity = 1;
+                }
+                console.log('quantity = '+$('#quantity').val());
+                
                 status = $("#statusCheck").is(':checked');
                 $('.form-horizontal').hide();
                 console.log(requestID);
             $.ajax({
             type: "POST",
             url: "QueryRequest",
-            data: {requestID:requestID, description:description, firstName:firstName, lastName:lastName, status:status, update:true},
+            data: {requestID:requestID, description:description, quantity:quantity, status:status, update:true},
             cache: false,
             datatype: "application/json",
             success: function(data, textStatus, request){

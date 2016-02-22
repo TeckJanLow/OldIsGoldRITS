@@ -136,8 +136,8 @@ public class QueryRequestServlet extends HttpServlet {
     private void runUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         Integer requestID = Integer.parseInt(request.getParameter("requestID"));
-        String firstName = request.getParameter("firstName").trim();
-        String lastName = request.getParameter("lastName").trim();
+        Integer quantity = Integer.parseInt(request.getParameter("quantity").trim());
+        
         String description = request.getParameter("description").trim();
         Boolean status = Boolean.valueOf(request.getParameter("status"));
         
@@ -146,7 +146,7 @@ public class QueryRequestServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
         log.log(Level.INFO, "Request {0} status = {1}", new Object[]{requestID, status});
         try {
-            requestHandler.editRequest(requestID, description, 1, status);
+            requestHandler.editRequest(requestID, description, quantity, status);
         } catch (SQLException ex) {
             Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
