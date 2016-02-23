@@ -10,6 +10,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+            <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Request Manager</title>
 
@@ -99,7 +106,7 @@
   </div>
             <div class="form-group">
        <div class="col-sm-10 col-sm-offset-1">
-            <div id="customerList"> <jsp:include page="customerList.jsp"></jsp:include></div>
+             <jsp:include page="customerList.jsp"></jsp:include>
             </div></div>     
        <div class="checkbox col-sm-offset-1">
     <label>
@@ -112,7 +119,7 @@
       </div>
       <div class="modal-footer">
         <button id="closeButton" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button id="updateButton" type="button" class="btn btn-primary">Save changes</button>
+        <button id="updateButton" type="button" class="btn btn-primary">Add Request</button>
       </div>
     </div>
   </div>
@@ -181,7 +188,8 @@
         });
          
     }); 
-    
+    $('#customerList').on('change',function(){console.log( $(this).val());});
+
     $('#addNewRequest').click(function(){
         
         $('#progressBarOverviewModalAdd').show();

@@ -52,7 +52,10 @@
             <c:set var="description" value="${element.request.description}"/>
             <c:set var="quantity" value="${element.request.quantity}"/>
             <c:set var="isCompleted" value="${element.request.isComplete}"/>
-            <td><a data-toggle="modal" data-target="#myModal" id ="${element.request.requestID}" href="#" onclick="openEdit('${id}','${description}','${quantity}','${isCompleted}');"><span class="glyphicon glyphicon-edit"></span></a></td>
+            <td><a data-toggle="modal" data-target="#myModal" id ="${element.request.requestID}" href="#" onclick="openEdit('${id}','${description}','${quantity}','${isCompleted}');"><span class="glyphicon glyphicon-edit"></span></a>
+            <a data-toggle="modal" data-target="#confirmDeleteModal" id ="delete_${element.request.requestID}" href="#" onclick="deleteRequest('${id}');"><span class="glyphicon glyphicon-trash"></span></a>
+       
+            </td>
             </tr> 
             </c:forEach>
             </table>
@@ -133,6 +136,7 @@
         
         $.ready(function(){
             $('#progressBarOverviewModal').hide();
+            $('#customerList').on('change',function(){console.log($('#customerList').val());});
         });
         
         $('#closeButton').click(function(){

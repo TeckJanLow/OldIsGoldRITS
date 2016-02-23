@@ -19,7 +19,7 @@ import oldisgoldrits.model.Request;
  *
  * @author Teck Jan Low
  */
-public class RequestParser {
+public class ResultSetParser {
     
     public ArrayList<RequestTable> parse (ResultSet rs) throws SQLException {
         
