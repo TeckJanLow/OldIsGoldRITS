@@ -52,8 +52,8 @@
             <c:set var="description" value="${element.request.description}"/>
             <c:set var="quantity" value="${element.request.quantity}"/>
             <c:set var="isCompleted" value="${element.request.isComplete}"/>
-            <td><a data-toggle="modal" data-target="#myModal" id ="${element.request.requestID}" href="#" onclick="openEdit('${id}','${description}','${quantity}','${isCompleted}');"><span class="glyphicon glyphicon-edit"></span></a>
-            <a data-toggle="modal" data-target="#confirmDeleteModal" id ="delete_${element.request.requestID}" href="#" onclick="deleteRequest('${id}');"><span class="glyphicon glyphicon-trash"></span></a>
+            <td><a style="margin-left:15px" data-toggle="modal" data-target="#myModal" id ="${element.request.requestID}" href="#" onclick="openEdit('${id}','${description}','${quantity}','${isCompleted}');"><span class="glyphicon glyphicon-edit"></span></a>
+            <a style="margin-left:10px" data-toggle="modal" data-target="#confirmDeleteModal" id ="delete_${element.request.requestID}" href="#" onclick="deleteRequest('${id}');"><span class="glyphicon glyphicon-trash"></span></a>
        
             </td>
             </tr> 
