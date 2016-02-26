@@ -37,6 +37,7 @@ public class InventoryParser {
             Inventory inv = new Inventory(inventoryID, quality, quantity, price, purchasePrice, albumID);
             Album album = new Album();
             album.setArtist(artist);
+            album.setTitle(title);
             album.setGenre(genre);
             album.setComments(comments);
             

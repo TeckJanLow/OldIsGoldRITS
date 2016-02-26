@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script src="js/jquery-2.1.4.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/moment.js"></script>
 <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">

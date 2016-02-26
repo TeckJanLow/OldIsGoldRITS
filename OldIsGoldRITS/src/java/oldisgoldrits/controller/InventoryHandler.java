@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import oldisgoldrits.model.InventoryTable;
 
 /**
  * Contains all methods involving the creation and manipulation of Inventory items.
@@ -24,17 +26,21 @@ public class InventoryHandler {
      * @return A ResultSet of all inventory data
      * @throws SQLException 
      */
-    public ResultSet getInventory() throws SQLException {
+    public ArrayList<InventoryTable> getInventory() throws SQLException {
         
         DatabaseConnector dbc = new DatabaseConnector();
-        Connection conn = dbc.connect();
-        String query = "SELECT INVENTORY.*, ALBUM.title, ALBUM.artist, "
-                + "ALBUM.genre, ALBUM.comment FROM INVENTORY LEFT JOIN ALBUM "
-                + "ON INVENTORY.album_id = ALBUM.album_id";
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery(query);
-        conn.close();
-        return rs;
+        ArrayList<InventoryTable> inventoryList;
+        try (Connection conn = dbc.connect()) {
+            String query = "SELECT INVENTORY.*, ALBUM.title, ALBUM.artist, "
+                    + "ALBUM.genre, ALBUM.comment FROM INVENTORY LEFT JOIN ALBUM "
+                    + "ON INVENTORY.album_id = ALBUM.album_id";
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            InventoryParser inventoryParser = new InventoryParser();
+            inventoryList = inventoryParser.parse(rs);
+        }
+        
+        return inventoryList;
     }
     
     /**

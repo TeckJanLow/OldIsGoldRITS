@@ -42,12 +42,17 @@ public class QueryRequestServlet extends HttpServlet {
         String status = request.getParameter("status");
         String title = request.getParameter("title");
         Boolean update = Boolean.valueOf(request.getParameter("update"));
+        Boolean add = Boolean.valueOf(request.getParameter("add"));
         Logger log = Logger.getLogger(getClass().getSimpleName());
         log.info("Update: "+update+ "param update: "+ request.getParameter("update") );
         if(update)
         {
             
             runUpdate(request,response);
+        }
+        else if (add)
+        {
+            addRequest(request,response);
         }
         else{
         
@@ -153,5 +158,25 @@ public class QueryRequestServlet extends HttpServlet {
         requestDispatcher.forward(request, response);
         
     }
+
+    private void addRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Integer customerID = Integer.parseInt(request.getParameter("customerID"));
+        Integer quantity = Integer.parseInt(request.getParameter("quantity").trim());
+        
+        String description = request.getParameter("description").trim();
+        Boolean status = Boolean.valueOf(request.getParameter("status"));
+        
+        RequestHandler requestHandler = new RequestHandler();
+        Logger log = Logger.getLogger(getClass().getSimpleName());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
+        log.log(Level.INFO, "Request {0} status = {1}", new Object[]{customerID, status});
+        try {
+            requestHandler.addNewRequest(customerID, 0, description, description, 0, true);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        requestDispatcher.forward(request, response);
+         }
 
 }

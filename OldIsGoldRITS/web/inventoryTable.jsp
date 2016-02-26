@@ -10,40 +10,28 @@
 
             <table>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Job Title</th>
-                    <th>Favorite Color</th>
-                    <th>Wars or Trek?</th>
+                    <th>SKU</th>
+                    <th>Artist</th>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Quality</th>
 
-                    <th>Date of Birth</th>
-                    <th>Dream Vacation City</th>
-                    <th>GPA</th>
-                    <th>Arbitrary Data</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Comments</th>
                 </tr>
-                <tr>
-                    <td>James</td>
-                    <td>Matman</td>
-                    <td>Chief Sandwich Eater</td>
-                    <td>Lettuce Green</td>
-                    <td><c:out value="${requestScope.title}"/></td>
 
-                    <td>January 13, 1979</td>
-                    <td>Gotham City</td>
-                    <td>3.1</td>
-                    <td>RBX-12</td>
-                </tr>
-                  
-            <c:forEach var="element" items="${inventory}">
+            <c:forEach var="element" items="${inventoryList}">
             <tr>
-            <td>${element.quality}</td> 
-            <td>${element.quantity}</td> 
-            <td>${element.price}</td>
-            <td>${title}</td> 
-            <td>${title}</td> 
-            <td>${title}</td>
-            <td>${title}</td> 
-            <td>${title}</td>
+            <td>${element.inventory.inventoryID}</td> 
+            <td>${element.album.artist}</td>
+            <td>${element.album.title}</td>
+            <td>${element.album.genre}</td>
+            <td>${element.inventory.quality}</td> 
+            <td>${element.inventory.quantityOnHand}</td> 
+            <td>${element.inventory.price}</td>
+            <td>${element.album.comments}</td> 
+            
             </tr> 
             </c:forEach>
             </table>

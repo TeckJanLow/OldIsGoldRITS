@@ -41,7 +41,7 @@ public class RequestHandler {
         Logger log  = Logger.getLogger(getClass().getSimpleName());
         log.info(query);
         ResultSet rs = st.executeQuery(query);
-        ResultSetParser rp = new ResultSetParser();
+        RequestParser rp = new RequestParser();
         
         ArrayList<RequestTable> requestList = rp.parse(rs);
         rs.close();
@@ -68,7 +68,7 @@ public class RequestHandler {
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
        
-        ResultSetParser rp = new ResultSetParser();
+        RequestParser rp = new RequestParser();
         
         ArrayList<RequestTable> requestList = rp.parse(rs);
         rs.close();

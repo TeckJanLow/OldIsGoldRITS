@@ -5,29 +5,22 @@
  */
 package oldisgoldrits.servlet;
 
-
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-
-import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import oldisgoldrits.controller.InventoryHandler;
-import oldisgoldrits.model.InventoryTable;
-import oldisgoldrits.model.RequestTable;
+import javax.servlet.http.HttpSession;
+import oldisgoldrits.controller.EmployeeAuthenticator;
 
 /**
  *
- * @author madan parameswaran
+ * @author madan
  */
-@WebServlet(name = "QueryInventoryServlet", urlPatterns = {"/QueryInventory"})
-public class QueryInventoryServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/Login"})
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,26 +33,12 @@ public class QueryInventoryServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String inventoryID = request.getParameter("inventoryID");
-        String title = request.getParameter("title");
-        
-        
-        Logger log = Logger.getLogger(getClass().getSimpleName());
-        
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/inventoryTable.jsp");
-        InventoryHandler handler = new InventoryHandler();
-        ArrayList<InventoryTable> inventoryList;
-        try {
-            inventoryList = handler.getInventory();
-            request.setAttribute("inventoryList", inventoryList);
-        } catch (SQLException ex) {
-            Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
-            
-        }
-        
-        requestDispatcher.forward(request, response);
-  
+        response.setContentType("text/html;charset=UTF-8");
+        String user = request.getParameter("user");
+        String pass = request.getParameter("pass");
+        HttpSession session = request.getSession();
+        String employeeID = EmployeeAuthenticator.login(user,pass);
+        session.setAttribute("empId", employeeID);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

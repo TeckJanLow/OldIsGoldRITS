@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import oldisgoldrits.model.Customer;
 import oldisgoldrits.model.Employee;
-import oldisgoldrits.model.Inventory;
 import oldisgoldrits.model.RequestTable;
 import oldisgoldrits.model.Request;
 
@@ -19,7 +18,7 @@ import oldisgoldrits.model.Request;
  *
  * @author Teck Jan Low
  */
-public class ResultSetParser {
+public class RequestParser {
     
     public ArrayList<RequestTable> parse (ResultSet rs) throws SQLException {
         

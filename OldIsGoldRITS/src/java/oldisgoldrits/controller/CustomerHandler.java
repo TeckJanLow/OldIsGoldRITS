@@ -112,7 +112,7 @@ public class CustomerHandler {
             Statement st = conn.createStatement();
             Logger log  = Logger.getLogger(getClass().getSimpleName());
             log.info(query);
-            ResultSetParser rp = new ResultSetParser();
+            RequestParser rp = new RequestParser();
             ResultSet rs = st.executeQuery(query);
             ArrayList<Customer> requestList = rp.parseCustomer(rs);
             rs.close();

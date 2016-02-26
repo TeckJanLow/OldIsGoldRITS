@@ -29,8 +29,8 @@
                 <h1>Welcome</h1>
 
                 <form class="form">
-                    <input type="text" placeholder="Username">
-                    <input type="password" placeholder="Password">
+                    <input id="user" type="text" placeholder="Username">
+                    <input id="pass" type="password" placeholder="Password">
                     <button type="submit" id="login-button">Login</button>
 
                 </form>
@@ -57,5 +57,13 @@
 
 
     </body>
+    <script>
+        $(document).ready(function(){
+            
+            
+            
+        });
+        
+    </script>
 </html>
 

@@ -96,12 +96,12 @@
 
   <div class="form-group">
        <div class="col-sm-10 col-sm-offset-1">
-      <input type="text" class="form-control" id="description" >
+      <input type="text" class="form-control" id="addDescription" >
     </div>
   </div>
   <div class="form-group">
        <div class="col-sm-10 col-sm-offset-1">
-      <input type="number" min="1" class="form-control" id="quantity" >
+      <input id="addQuantity" type="number" min="1" class="form-control" id="quantity" >
     </div>
   </div>
             <div class="form-group">
@@ -110,7 +110,7 @@
             </div></div>     
        <div class="checkbox col-sm-offset-1">
     <label>
-      <input type="checkbox" id="statusCheck"> Completed
+      <input type="checkbox" id="addStatusCheck"> Completed
     </label>
   </div>
   
@@ -119,14 +119,14 @@
       </div>
       <div class="modal-footer">
         <button id="closeButton" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button id="updateButton" type="button" class="btn btn-primary">Add Request</button>
+        <button id="confirmAddNewRequest" type="button" class="btn btn-primary">Add Request</button>
       </div>
     </div>
   </div>
       </div>
     
     </div>
-
+            <input type="hidden" id="customerID"></input>
     </body>
     <script>
        $(document).ready(function() {
@@ -142,6 +142,7 @@
            $('.dropdown-menu a').click(function(e){
            $('#btnStatus').html(this.innerHTML +' <span class="caret"></span>');
            statusText = this.innerHTML;
+           
             });
             
         $('#search').click(function(){
@@ -188,7 +189,10 @@
         });
          
     }); 
-    $('#customerList').on('change',function(){console.log( $(this).val());});
+    $('#customerList').on('change',function(){console.log( $(this).val());
+    $('#customerID').val($(this).val());
+    console.log('customer id ' + $('customerID').val());
+    });
 
     $('#addNewRequest').click(function(){
         
@@ -214,6 +218,41 @@
                 console.log(thrownError);}
          
         });
+        
+    });
+    
+    $('#confirmAddNewRequest').click(function(){
+        $('#progressBarOverviewModalAdd').show();
+        customerID = $('#customerID').val();
+        description = $('#addDescription').val();
+        if(description === '')
+        {
+            alert('Please enter a description!');
+        }
+        quantity = $('#addQuantity').val();
+                if(quantity === '')
+                {
+                    quantity = 1;
+                }
+        status = $('#addStatusCheck').is(':checked'); 
+        requestDate = moment().format('YYYY-MM-DD');
+        $.ajax({
+            type: "POST",
+            url: "QueryRequest",
+            data: {add:true, status:status, customerID:customerID, description:description, quantity: quantity, date: requestDate},
+            cache: false,
+            datatype: "application/json",
+            success: function(data, textStatus, request){
+                $('#progressBarOverviewModalAdd').hide();
+                
+                },
+                 error: function(xhr, ajaxOptions, thrownError) {
+                $('#progressBarOverviewModalAdd').hide();
+                console.log(xhr.status);
+                console.log(thrownError);}
+         
+        });
+        
         
     });
        }); 
