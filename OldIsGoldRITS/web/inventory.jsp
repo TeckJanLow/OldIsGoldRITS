@@ -92,8 +92,6 @@
                 datatype: "application/json",
                 success: function (data, textStatus, request) {
                     $('#progressBarOverview').hide();
-                    console.log("data = " + data);
-                    console.log("request = " + request);
                     $('#page-wrap').html(data);
                     $('#page-wrap').fadeIn("slow", function () {
                         $(this).show();
@@ -108,73 +106,10 @@
 
             });
 
-            $('#customerList').on('change', function () {
-                console.log($(this).val());
-                $('#customerID').val($(this).val());
-                console.log('customer id ' + $('customerID').val());
-            });
 
-            $('#addNewRequest').click(function () {
-
-                $('#progressBarOverviewModalAdd').show();
-
-                console.log('add new request button clicked!');
-                $.ajax({
-                    type: "POST",
-                    url: "QueryPerson",
-                    data: {},
-                    cache: false,
-                    datatype: "application/json",
-                    success: function (data, textStatus, request) {
-                        $('#progressBarOverviewModalAdd').hide();
-                        $('#customerList').html(data);
-                        $('#addForm').show();
-                        console.log(data);
-
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        $('#progressBarOverviewModalAdd').hide();
-                        console.log(xhr.status);
-                        console.log(thrownError);
-                    }
-
-                });
-
-            });
-
-            $('#confirmAddNewRequest').click(function () {
-                $('#progressBarOverviewModalAdd').show();
-                customerID = $('#customerID').val();
-                description = $('#addDescription').val();
-                if (description === '')
-                {
-                    alert('Please enter a description!');
-                }
-                quantity = $('#addQuantity').val();
-                if (quantity === '')
-                {
-                    quantity = 1;
-                }
-                status = $('#addStatusCheck').is(':checked');
-                requestDate = moment().format('YYYY-MM-DD');
-                $.ajax({
-                    type: "POST",
-                    url: "QueryRequest",
-                    data: {add: true, status: status, customerID: customerID, description: description, quantity: quantity, date: requestDate},
-                    cache: false,
-                    datatype: "application/json",
-                    success: function (data, textStatus, request) {
-                        $('#progressBarOverviewModalAdd').hide();
-
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        $('#progressBarOverviewModalAdd').hide();
-                        console.log(xhr.status);
-                        console.log(thrownError);
-                    }
-
-                });
-            });
         });
+
+        
+
     </script>
 </html>

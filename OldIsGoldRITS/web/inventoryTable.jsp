@@ -9,19 +9,21 @@
 <div id="page-wrap">
 
     <table>
-        <tr>
-            <th>SKU</th>
-            <th>Artist</th>
-            <th>Title</th>
-            <th>Genre</th>
-            <th>Quality</th>
+        <thead>
+            <tr>
+                <th>SKU</th>
+                <th>Artist</th>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Quality</th>
 
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Comments</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Comments</th>
 
-            <th>Manage</th>
-        </tr>
+                <th>Manage</th>
+            </tr>
+        </thead>
 
         <c:forEach var="element" items="${inventoryList}">
             <tr>
@@ -34,7 +36,7 @@
                 <td>${element.inventory.price}</td>
                 <td>${element.album.comments}</td> 
 
-                <c:set var="id" value="${element.inventory.inventoryID}"/>
+                <c:set var="sku" value="${element.inventory.inventoryID}"/>
                 <c:set var="artist" value="${element.album.artist}"/>
                 <c:set var="title" value="${element.album.title}"/>
                 <c:set var="genre" value="${element.album.genre}"/>
@@ -42,8 +44,8 @@
                 <c:set var="quantity" value="${element.inventory.quantityOnHand}"/>
                 <c:set var="price" value="${element.inventory.price}"/>
                 <c:set var="comments" value="${element.album.comments}"/>
-                <td><a style="margin-left:15px" data-toggle="modal" data-target="#myModal" id ="${element.inventory.inventoryID}" href="#" onclick="openEdit('${id}', '${quantity}', '${price}', '${comments}');"><span class="glyphicon glyphicon-edit"></span></a>
-                    <a style="margin-left:10px" data-toggle="modal" data-target="#confirmDeleteModal" id ="delete_${element.inventory.inventoryID}" href="#" onclick="deleteInventory('${id}');"><span class="glyphicon glyphicon-trash"></span></a>
+                <td><a style="margin-left:15px" data-toggle="modal" data-target="#myInventoryModal" href="#" onclick="openEdit('${sku}', '${quantity}', '${price}', '${comments}');"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a style="margin-left:10px" data-toggle="modal" data-target="#confirmDeleteModal" id ="delete_${element.inventory.inventoryID}" href="#" onclick="deleteInventory('${sku}');"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
 
             </tr> 
@@ -52,9 +54,8 @@
 
 </div>
 
-<!--Anything below this line is untested and unmodified for the inventory table-->
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myInventoryModal" tabindex="-1" role="dialog" aria-labelledby="myInventoryModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -75,9 +76,8 @@
                 <div id ="updateStatus"></div>
                 <form class="form-horizontal">
                     <div class="form-group">
-
                         <div class="col-sm-10 col-sm-offset-1">
-                            <input type="text" id="inventoryID" class="form-control"  disabled>
+                            <input type="text" id="sku" class="form-control"  disabled>
                         </div>
                     </div>
                     <div class="form-group">
@@ -87,7 +87,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-1">
-                            <input type="text" min="1" class="form-control" id="price" >
+                            <input type="number" min="1" class="form-control" id="price" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -95,12 +95,11 @@
                             <input type="text" class="form-control" id="comments" >
                         </div>
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer">
                 <button id="closeButton" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="updateButton" type="button" class="btn btn-primary">Save changes</button>
+                <button id="updateInventoryButton" type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -109,7 +108,8 @@
 <script>
     function openEdit(identity, quantity, price, comments)
     {
-        $('#inventoryID').val(identity);
+        console.log('Edit button was clicked!');
+        $('#sku').val(identity);
         $('#quantity').attr('placeholder', "Quantity");
         $('#quantity').val(quantity);
         $('#price').attr('placeholder', "Price");
@@ -129,11 +129,11 @@
         $('#progressBarOverviewModal').hide();
         $('.form-horizontal').show();
         $('#updateStatus').html('');
-        $('#updateButton').hide();
+        $('#updateInventoryButton').hide();
         $('#search').trigger('click');
     });
 
-    $('#updateButton').click(function () {
+    $('#updateInventoryButton').click(function () {
         $('#progressBarOverviewModal').show();
         console.log("save changes");
         sku = $('#inventoryID').val();
@@ -147,7 +147,7 @@
         console.log('quantity = ' + $('#quantity').val());
 
         $('.form-horizontal').hide();
-        console.log(inventoryID);
+        console.log(sku);
         $.ajax({
             type: "POST",
             url: "QueryInventory",
@@ -158,13 +158,13 @@
                 $('#progressBarOverviewModal').hide();
                 $('#updateStatus').html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> Inventory updated successfully</div>');
 
-                $('#updateButton').hide();
+                $('#updateInventoryButton').hide();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 $('#progressBarOverviewModal').hide();
                 console.log(xhr.status);
                 console.log(thrownError);
-                $('#updateButton').hide();
+                $('#updateInventoryButton').hide();
             }
 
         });
