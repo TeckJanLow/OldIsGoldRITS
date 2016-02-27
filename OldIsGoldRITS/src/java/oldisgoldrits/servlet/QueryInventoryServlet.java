@@ -143,17 +143,16 @@ public class QueryInventoryServlet extends HttpServlet {
         Integer sku = Integer.parseInt(request.getParameter("sku"));
         Integer quantity = Integer.parseInt(request.getParameter("quantity").trim());
         Double price = Double.parseDouble(request.getParameter("price").trim());
-        Double purchasePrice = Double.parseDouble(request.getParameter("purchasePrice").trim());
 
-        String comment = request.getParameter("comment").trim();
+        String comments = request.getParameter("comments").trim();
 
         InventoryHandler inventoryHandler = new InventoryHandler();
         Logger log = Logger.getLogger(getClass().getSimpleName());
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/inventoryTable.jsp");
-        log.log(Level.INFO, "sku {0} quantity = {1} price = {2} purchase = {3} "
-                + "comment = {4}", new Object[]{sku, quantity, price, purchasePrice, comment});
+        log.log(Level.INFO, "sku {0} quantity = {1} price = {2} comment = {3}", 
+                new Object[]{sku, quantity, price, comments});
         try {
-            inventoryHandler.editInventory(sku, quantity, price, purchasePrice, comment);
+            inventoryHandler.editInventory(sku, quantity, price, comments);
         } catch (SQLException ex) {
             Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
