@@ -87,7 +87,7 @@
         $.ajax({
             type: "POST",
             url: "QueryInventory",
-            data: {inventoryID:sku, title:title},
+            data: {sku:sku, title:title},
             cache: false,
             datatype: "application/json",
             success: function(data, textStatus, request){

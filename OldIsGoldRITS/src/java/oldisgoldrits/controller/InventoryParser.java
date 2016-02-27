@@ -49,5 +49,25 @@ public class InventoryParser {
         return inventoryList;
 
     }
+    
+    public ArrayList<Album> parseAlbum(ResultSet rs) throws SQLException {
+
+        ArrayList<Album> albumList = new ArrayList();
+
+        while (rs.next()) {
+
+            int albumID = rs.getInt("album_id");
+            String title = rs.getString("title");
+            String artist = rs.getString("artist");
+
+            Album album = new Album();
+            album.setTitle(title);
+            album.setArtist(artist);
+            album.setAlbumID(albumID);
+            
+            albumList.add(album);
+        }
+        return albumList;
+    }
 
 }

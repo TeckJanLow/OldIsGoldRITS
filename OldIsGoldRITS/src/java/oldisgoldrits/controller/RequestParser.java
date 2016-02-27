@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package oldisgoldrits.controller;
 
 import java.sql.ResultSet;
@@ -19,11 +18,11 @@ import oldisgoldrits.model.Request;
  * @author Teck Jan Low
  */
 public class RequestParser {
-    
-    public ArrayList<RequestTable> parse (ResultSet rs) throws SQLException {
-        
+
+    public ArrayList<RequestTable> parse(ResultSet rs) throws SQLException {
+
         ArrayList<RequestTable> requestList = new ArrayList();
-        
+
         while (rs.next()) {
             int requestID = rs.getInt("request_id");
             int customerID = rs.getInt("cust_id");
@@ -39,7 +38,7 @@ public class RequestParser {
             String prefCommunication = rs.getString("preferred_mode");
             String employeeFirst = rs.getString("emp_first");
             String employeeLast = rs.getString("emp_last");
-            
+
             Request rq = new Request(requestID, customerID, employeeID, description, date, quantity, isComplete);
             Customer cust = new Customer();
             cust.setFirstName(customerFirst);
@@ -50,38 +49,36 @@ public class RequestParser {
             Employee emp = new Employee();
             emp.setFirstName(employeeFirst);
             emp.setLastName(employeeLast);
-            
+
             RequestTable rt = new RequestTable(rq, cust, emp);
             requestList.add(rt);
         }
-        
+
         return requestList;
-        
+
     }
-    
-    
-        public ArrayList<Customer> parseCustomer (ResultSet rs) throws SQLException {
-        
-        ArrayList<Customer> requestList = new ArrayList();
-        
+
+    public ArrayList<Customer> parseCustomer(ResultSet rs) throws SQLException {
+
+        ArrayList<Customer> customerList = new ArrayList();
+
         while (rs.next()) {
-            
+
             int customerID = rs.getInt("cust_id");
-      
+
             String customerFirst = rs.getString("first_name");
             String customerLast = rs.getString("last_name");
-           
-            
+
             Customer customer = new Customer();
             customer.setFirstName(customerFirst);
             customer.setLastName(customerLast);
             customer.setId(customerID);
-            
-            requestList.add(customer);
+
+            customerList.add(customer);
         }
-        
-        return requestList;
-        
+
+        return customerList;
+
     }
 
 }

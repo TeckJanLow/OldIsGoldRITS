@@ -28,6 +28,10 @@
         <servlet-name>QueryPersonServlet</servlet-name>
         <servlet-class>oldisgoldrits.servlet.QueryPersonServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>QueryAlbumServlet</servlet-name>
+        <servlet-class>oldisgoldrits.servlet.QueryAlbumServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>index</servlet-name>
         <url-pattern>/index</url-pattern>

@@ -45,7 +45,7 @@ public class QueryInventoryServlet extends HttpServlet {
         Boolean add = Boolean.valueOf(request.getParameter("add"));
 
         Logger log = Logger.getLogger(getClass().getSimpleName());
-        log.info("Update: " + update + "param update: " + request.getParameter("update"));
+        log.log(Level.INFO, "SKU = {0}", sku);
 
         if (update) {
             runUpdate(request, response);
