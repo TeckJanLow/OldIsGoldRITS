@@ -65,6 +65,7 @@
             
             $('#login-button').click(function(event){
                 event.preventDefault();
+                $('#loginStatus').html('');
                 console.log('the login button was clicked!');
                 user = $('#user').val();
                 pass = $('#pass').val();
