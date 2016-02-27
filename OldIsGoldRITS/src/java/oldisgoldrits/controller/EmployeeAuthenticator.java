@@ -17,20 +17,32 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author madan
+ * @author madan parameswaran
  */
 public class EmployeeAuthenticator {
     private final String salt;
 
+    /**
+     * This method returns the salt used to encrypt the password
+     * @return
+     */
     public String getSalt() {
         return salt;
     }
 
+    /**
+     * This is the constructor of the employee authenticator class
+     */
     public EmployeeAuthenticator() {
         this.salt = saltShaker();
     }
     
-    
+    /**
+     * This method returns a valid employee id number as a String if authenticated correctly
+     * @param user String denoting the username of the login
+     * @param pass String for the password
+     * @return
+     */
     public static String login(String user, String pass)
     {
         Logger log = Logger.getLogger("EmployeeAuthenticator");
@@ -42,7 +54,6 @@ public class EmployeeAuthenticator {
                 
                 String query = "SELECT emp_id from bongo_records.EMPLOYEE WHERE email = '"+user+"' and pass=aes_encrypt('"+pass+"','"+salt+"')";
                 Statement st = conn.createStatement();
-                log.log(Level.INFO, "Executing query: {0}", query);
                 ResultSet rs = st.executeQuery(query);
                 while(rs.next())
                 {
@@ -59,7 +70,10 @@ public class EmployeeAuthenticator {
         return null;
     }
     
-    
+    /**
+     * This method returns the salt used for the encryption
+     * @return 
+     */
     
     private String saltShaker()
     {
