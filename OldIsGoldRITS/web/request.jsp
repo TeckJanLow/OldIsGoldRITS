@@ -233,7 +233,9 @@
             $('#addNewRequest').click(function () {
 
                 $('#progressBarOverviewModalAdd').show();
-
+                $('#addDescription').attr('placeholder',"Description");
+                $('#addQuantity').attr('placeholder',"Quantity");
+                $('#addQuantity').val(1);
                 console.log('add new request button clicked!');
                 $.ajax({
                     type: "POST",
