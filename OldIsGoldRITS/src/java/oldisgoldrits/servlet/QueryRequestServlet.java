@@ -6,7 +6,6 @@
 package oldisgoldrits.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -150,8 +149,10 @@ public class QueryRequestServlet extends HttpServlet {
     private void addRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer customerID = Integer.parseInt(request.getParameter("customerID"));
         Integer quantity = Integer.parseInt(request.getParameter("quantity").trim());
+        Integer employeeID = Integer.parseInt(request.getParameter("empID"));
 
         String description = request.getParameter("description").trim();
+        String date = request.getParameter("date");
         Boolean status = Boolean.valueOf(request.getParameter("status"));
 
         RequestHandler requestHandler = new RequestHandler();
@@ -159,7 +160,8 @@ public class QueryRequestServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
         log.log(Level.INFO, "Request {0} status = {1}", new Object[]{customerID, status});
         try {
-            requestHandler.addNewRequest(customerID, 0, description, description, 0, true);
+
+            requestHandler.addNewRequest(customerID, employeeID, description, date, quantity, status);
 
         } catch (SQLException ex) {
             Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);

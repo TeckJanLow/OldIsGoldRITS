@@ -39,18 +39,18 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
+       
         String employeeID = EmployeeAuthenticator.login(user,pass);
        
-        if(employeeID != null){
+        if(!(employeeID.equalsIgnoreCase("-1"))){
             session.setAttribute("empId", employeeID);
-            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/index");
-            requestDispatcher.forward(request, response);   
+            response.sendRedirect("index");
         }
         else
         {
-            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/login");
-            requestDispatcher.forward(request, response);
+            response.setStatus(500);
+            response.sendError(500, "The username or password is incorrect.");
         }
     }
 
