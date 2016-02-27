@@ -15,8 +15,8 @@
 	and also iPads specifically.
 	*/
 	@media 
-	only screen and (max-width: 760px),
-	(min-device-width: 768px) and (max-device-width: 1024px)  {
+	only screen and (max-width: 960px),
+	(min-device-width: 480px) and (max-device-width: 1024px)  {
 	
 		/* Force table to not be like tables anymore */
 		table, thead, tbody, th, td, tr { 
@@ -54,14 +54,14 @@
 		/*
 		Label the data
 		*/
-		td:nth-of-type(1):before { content: "Request ID"; }
-		td:nth-of-type(2):before { content: "Description"; }
-		td:nth-of-type(3):before { content: "Quantity"; }
-		td:nth-of-type(4):before { content: "Date"; }
-		td:nth-of-type(5):before { content: "Customer"; }
-		td:nth-of-type(6):before { content: "Contact"; }
-		td:nth-of-type(7):before { content: "Status"; }
-		td:nth-of-type(8):before { content: "Manage"; }
+		td:nth-of-type(1):before { font-weight: bold; content: "Request ID"; }
+		td:nth-of-type(2):before { font-weight: bold; content: "Description"; }
+		td:nth-of-type(3):before { font-weight: bold; content: "Quantity"; }
+		td:nth-of-type(4):before { font-weight: bold; content: "Date"; }
+		td:nth-of-type(5):before { font-weight: bold; content: "Customer"; }
+		td:nth-of-type(6):before { font-weight: bold; content: "Contact"; }
+		td:nth-of-type(7):before { font-weight: bold; content: "Status"; }
+		td:nth-of-type(8):before { font-weight: bold; content: "Manage"; }
 		
 	}
 	
@@ -71,9 +71,21 @@
 	and (max-device-width : 480px) {
 		body { 
 			padding: 0; 
-			margin: 0; 
-			width: 320px; }
+			margin-left:0; 
+			width: 400px 
 		}
+                table {
+                    margin-left: -84px;
+                    width: 385px;
+                }
+                .glyphicon.glyphicon-edit {
+                    font-size: 45px;
+               }
+               .glyphicon.glyphicon-trash {
+                    font-size: 45px;
+               }
+               
+        }
 	
 	/* iPads (portrait and landscape) ----------- */
 	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {

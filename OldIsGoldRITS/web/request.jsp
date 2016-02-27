@@ -26,7 +26,39 @@
         <link rel="stylesheet" href="css/table.css">
        
     </head>
-    
+    <style>
+        
+        	/* Smartphones (portrait and landscape) ----------- */
+	@media only screen
+	and (min-device-width : 320px)
+	and (max-device-width : 480px) {
+		body { 
+			padding: 0; 
+			margin-left:0; 
+			width: 400px 
+		}
+                
+                #btnStatus{
+                    margin-top: 15px
+                }
+                .form-control
+                {
+                    width:90%
+                }
+                .form-group
+                {
+                    margin-left:12px
+                }
+                #search
+                {
+                    margin-left: 12px
+                }
+                #addNewRequest
+                {
+                    margin-left: 12px
+                }
+        }
+    </style>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
         <div id="mainContent" style="display: none">
