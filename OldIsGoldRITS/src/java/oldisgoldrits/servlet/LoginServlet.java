@@ -7,7 +7,10 @@ package oldisgoldrits.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +22,7 @@ import oldisgoldrits.controller.EmployeeAuthenticator;
  *
  * @author madan
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/Login"})
+@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginAuth"})
 public class LoginServlet extends HttpServlet {
 
     /**
@@ -38,7 +41,17 @@ public class LoginServlet extends HttpServlet {
         String pass = request.getParameter("pass");
         HttpSession session = request.getSession();
         String employeeID = EmployeeAuthenticator.login(user,pass);
-        session.setAttribute("empId", employeeID);
+       
+        if(employeeID != null){
+            session.setAttribute("empId", employeeID);
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/index");
+            requestDispatcher.forward(request, response);   
+        }
+        else
+        {
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/login");
+            requestDispatcher.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
