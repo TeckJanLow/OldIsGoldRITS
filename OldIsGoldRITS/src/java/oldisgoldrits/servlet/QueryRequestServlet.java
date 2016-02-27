@@ -44,58 +44,47 @@ public class QueryRequestServlet extends HttpServlet {
         Boolean update = Boolean.valueOf(request.getParameter("update"));
         Boolean add = Boolean.valueOf(request.getParameter("add"));
         Logger log = Logger.getLogger(getClass().getSimpleName());
-        log.info("Update: "+update+ "param update: "+ request.getParameter("update") );
-        if(update)
-        {
-            
-            runUpdate(request,response);
-        }
-        else if (add)
-        {
-            addRequest(request,response);
-        }
-        else{
+        log.info("Update: " + update + "param update: " + request.getParameter("update"));
         
-      
-        RequestHandler requestHandler = new RequestHandler();
-        if((status == null || status.equals("")) && (title == null || title.equals("")))
-        {
-        try {
-            ArrayList<RequestTable> requestList = requestHandler.getRequest();
-            log.info(requestList.get(0).getRequest().getDescription());
-            request.setAttribute("requestList", requestList);
-        } catch (SQLException ex) {
-            Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        }
-        else if((status == null || status.equals("")) && (!title.trim().equals("")))
-        {
-            try {
-                String condition = "REQUEST.description like \"%"+title+"%\";";
-                log.info(condition);
-                ArrayList<RequestTable> requestList = requestHandler.getRequest(condition);
-                
-            request.setAttribute("requestList", requestList);
-            } catch (SQLException ex) {
-                Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+        if (update) {
+            runUpdate(request, response);
+        } else if (add) {
+            addRequest(request, response);
+        } else {
+            RequestHandler requestHandler = new RequestHandler();
+            if ((status == null || status.equals("")) && (title == null || title.equals(""))) {
+                try {
+                    ArrayList<RequestTable> requestList = requestHandler.getRequest();
+                    log.info(requestList.get(0).getRequest().getDescription());
+                    request.setAttribute("requestList", requestList);
+                } catch (SQLException ex) {
+                    Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else if ((status == null || status.equals("")) && (!title.trim().equals(""))) {
+                try {
+                    String condition = "REQUEST.description like \"%" + title + "%\";";
+                    log.info(condition);
+                    ArrayList<RequestTable> requestList = requestHandler.getRequest(condition);
+
+                    request.setAttribute("requestList", requestList);
+                } catch (SQLException ex) {
+                    Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    String condition = "REQUEST.status=" + status + " and REQUEST.description like \"%" + title + "%\";";
+                    log.info(condition);
+                    ArrayList<RequestTable> requestList = requestHandler.getRequest(condition);
+
+                    request.setAttribute("requestList", requestList);
+                } catch (SQLException ex) {
+                    Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-        else
-        {
-            try {
-                String condition = "REQUEST.status="+status+" and REQUEST.description like \"%"+title+"%\";";
-                log.info(condition);
-                ArrayList<RequestTable> requestList = requestHandler.getRequest(condition);
-                
-            request.setAttribute("requestList", requestList);
-            } catch (SQLException ex) {
-                Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
-        
-        requestDispatcher.forward(request, response);
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
+
+            requestDispatcher.forward(request, response);
         }
     }
 
@@ -139,13 +128,13 @@ public class QueryRequestServlet extends HttpServlet {
     }// </editor-fold>
 
     private void runUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         Integer requestID = Integer.parseInt(request.getParameter("requestID"));
         Integer quantity = Integer.parseInt(request.getParameter("quantity").trim());
-        
+
         String description = request.getParameter("description").trim();
         Boolean status = Boolean.valueOf(request.getParameter("status"));
-        
+
         RequestHandler requestHandler = new RequestHandler();
         Logger log = Logger.getLogger(getClass().getSimpleName());
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
@@ -156,27 +145,26 @@ public class QueryRequestServlet extends HttpServlet {
             Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         requestDispatcher.forward(request, response);
-        
     }
 
     private void addRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer customerID = Integer.parseInt(request.getParameter("customerID"));
         Integer quantity = Integer.parseInt(request.getParameter("quantity").trim());
-        
+
         String description = request.getParameter("description").trim();
         Boolean status = Boolean.valueOf(request.getParameter("status"));
-        
+
         RequestHandler requestHandler = new RequestHandler();
         Logger log = Logger.getLogger(getClass().getSimpleName());
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
         log.log(Level.INFO, "Request {0} status = {1}", new Object[]{customerID, status});
         try {
             requestHandler.addNewRequest(customerID, 0, description, description, 0, true);
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         requestDispatcher.forward(request, response);
-         }
+    }
 
 }

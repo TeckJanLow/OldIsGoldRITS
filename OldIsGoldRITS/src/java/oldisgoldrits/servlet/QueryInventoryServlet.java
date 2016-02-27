@@ -5,7 +5,6 @@
  */
 package oldisgoldrits.servlet;
 
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import oldisgoldrits.controller.InventoryHandler;
 import oldisgoldrits.model.InventoryTable;
-import oldisgoldrits.model.RequestTable;
 
 /**
  *
@@ -40,29 +38,68 @@ public class QueryInventoryServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String inventoryID = request.getParameter("inventoryID");
+
+        String sku = request.getParameter("sku");
         String title = request.getParameter("title");
-        
-        
+        Boolean update = Boolean.valueOf(request.getParameter("update"));
+        Boolean add = Boolean.valueOf(request.getParameter("add"));
+
         Logger log = Logger.getLogger(getClass().getSimpleName());
-        
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/inventoryTable.jsp");
-        InventoryHandler handler = new InventoryHandler();
-        ArrayList<InventoryTable> inventoryList;
-        try {
-            inventoryList = handler.getInventory();
-            request.setAttribute("inventoryList", inventoryList);
-        } catch (SQLException ex) {
-            Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
-            
+        log.info("Update: " + update + "param update: " + request.getParameter("update"));
+
+        if (update) {
+            runUpdate(request, response);
+        } else if (add) {
+            addInventory(request, response);
+        } else {
+            InventoryHandler inventoryHandler = new InventoryHandler();
+            if ((sku == null || sku.equals("")) && (title == null || title.equals(""))) {
+                try {
+                    ArrayList<InventoryTable> inventoryList = inventoryHandler.getInventory();
+                    log.info(inventoryList.get(0).getAlbum().getTitle());
+                    request.setAttribute("inventoryList", inventoryList);
+                } catch (SQLException ex) {
+                    Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else if ((sku == null || sku.equals("")) && (!title.trim().equals(""))) {
+                try {
+                    String condition = "ALBUM.title like \"%" + title + "%\";";
+                    log.info(condition);
+                    ArrayList<InventoryTable> inventoryList = inventoryHandler.getInventory(condition);
+
+                    request.setAttribute("inventoryList", inventoryList);
+                } catch (SQLException ex) {
+                    Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if ((sku != null || !sku.equals("")) && (title == null || title.equals(""))) {
+                try {
+                    String condition = "INVENTORY.sku = " + sku;
+                    log.info(condition);
+                    ArrayList<InventoryTable> inventoryList = inventoryHandler.getInventory(condition);
+
+                    request.setAttribute("inventoryList", inventoryList);
+                } catch (SQLException ex) {
+                    Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    String condition = "INVENTORY.sku = " + sku + " and ALBUM.title like \"%" + title + "%\";";
+                    log.info(condition);
+                    ArrayList<InventoryTable> inventoryList = inventoryHandler.getInventory(condition);
+
+                    request.setAttribute("inventoryList", inventoryList);
+                } catch (SQLException ex) {
+                    Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/inventoryTable.jsp");
+
+            requestDispatcher.forward(request, response);
         }
-        
-        requestDispatcher.forward(request, response);
-  
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -100,5 +137,52 @@ public class QueryInventoryServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void runUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Integer sku = Integer.parseInt(request.getParameter("sku"));
+        Integer quantity = Integer.parseInt(request.getParameter("quantity").trim());
+        Double price = Double.parseDouble(request.getParameter("price").trim());
+        Double purchasePrice = Double.parseDouble(request.getParameter("purchasePrice").trim());
+
+        String comment = request.getParameter("comment").trim();
+
+        InventoryHandler inventoryHandler = new InventoryHandler();
+        Logger log = Logger.getLogger(getClass().getSimpleName());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/inventoryTable.jsp");
+        log.log(Level.INFO, "sku {0} quantity = {1} price = {2} purchase = {3} "
+                + "comment = {4}", new Object[]{sku, quantity, price, purchasePrice, comment});
+        try {
+            inventoryHandler.editInventory(sku, quantity, price, purchasePrice, comment);
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        requestDispatcher.forward(request, response);
+
+    }
+
+    private void addInventory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String quality = request.getParameter("quality").trim();
+        Integer quantity = Integer.parseInt(request.getParameter("quantity").trim());
+        Double price = Double.parseDouble(request.getParameter("price").trim());
+        Double purchasePrice = Double.parseDouble(request.getParameter("purchasePrice").trim());
+        Integer albumID = Integer.parseInt(request.getParameter("albumID").trim());
+
+        InventoryHandler inventoryHandler = new InventoryHandler();
+        Logger log = Logger.getLogger(getClass().getSimpleName());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/inventoryTable.jsp");
+        log.log(Level.INFO, "quality = {0} quantity = {1} price = {2} purchase = {3} "
+                + "albumID = {4}", new Object[]{quality, quantity, price, purchasePrice, albumID});
+        try {
+            inventoryHandler.addNewInventory(quality, quantity, price, purchasePrice, albumID);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        requestDispatcher.forward(request, response);
+
+    }
 
 }
