@@ -24,12 +24,14 @@
     </head>
 
     <body>
-
+<div id ="loginStatus"></div>
         <div class="wrapper">
             <div class="container">
-                <h1>Welcome</h1>
+             
+                <h1>Old is Gold</h1>
 
                 <form class="form">
+                       
                     <input id="user" type="text" placeholder="Username">
                     <input id="pass" type="password" placeholder="Password">
                     <button id="login-button">Login</button>
@@ -83,7 +85,9 @@
                         window.location = "index";
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
-                        $('form').fadeIn(500);
+                    $('form').fadeIn(500); 
+                    $('#pass').val('');
+                    $('#loginStatus').html('<link rel="stylesheet" href="css/bootstrap.min.css"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Error!</strong> Username or password is incorrect</div>')
                     console.log(xhr.status);
                     console.log(thrownError);
                     }
