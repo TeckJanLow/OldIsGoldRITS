@@ -109,15 +109,7 @@
 </div>
 
 <script>
-    function inventoryEdit(identity, quantity, price, comments)
-    {
-        console.log('Edit button was clicked!');
-//        $('#price').val(price);
-//        $('#comments').val(comments);
-//        $('#quantity').val(quantity);
-//        $('#skuID').val(identity);
 
-    }
     function editInventory(identity,quantity,price,comments)
     {
         
