@@ -141,7 +141,7 @@
     $('#updateInventoryButton').click(function () {
         $('#progressBarOverviewModal').show();
         console.log("save changes");
-        sku = $('#inventoryID').val();
+        sku = $('#skuID').val();
         quantity = $('#quantity').val();
         price = $('#price').val();
         comments = $('#comments').val();
@@ -152,11 +152,14 @@
         console.log('quantity = ' + $('#quantity').val());
 
         $('.form-horizontal').hide();
-        console.log(sku);
+        console.log('sku = ' + $('#skuID').val());
+        console.log('quantity = ' + $('#quantity').val());
+        console.log('price = ' + $('#price').val());
+        console.log('comments = ' + $('#comments').val());
         $.ajax({
             type: "POST",
             url: "QueryInventory",
-            data: {sku: sku, quantity: quantity, price: price, comments: comments},
+            data: {sku: sku, quantity: quantity, price: price, comments: comments, update: true},
             cache: false,
             datatype: "application/json",
             success: function (data, textStatus, request) {

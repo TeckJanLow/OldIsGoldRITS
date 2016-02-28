@@ -103,23 +103,25 @@ public class InventoryHandler {
      * @param inventoryID The ID of the inventory item to be edited
      * @param quantity The new quantity of the item
      * @param price The new price of the item
-     * @param purchasePrice The new purchase price of the item
      * @param comment A comment regarding the album
      * @throws SQLException
      */
     public void editInventory(int inventoryID, int quantity, double price, 
             String comment) throws SQLException {
-
+        
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.connect();
         String queryOne = "UPDATE INVENTORY SET quantity = " + quantity 
                 + " , price = " + price + " WHERE sku = " + inventoryID;
         Statement st = conn.createStatement();
         st.executeUpdate(queryOne);
+        
         ResultSet rs = st.executeQuery("SELECT album_id FROM INVENTORY WHERE sku = " + inventoryID);
+        rs.next();
         String queryTwo = "UPDATE ALBUM SET comment = '" + comment + "' WHERE "
-                + "ALBUM.album_id = " + rs.getInt("sku");
+                + "ALBUM.album_id = " + rs.getInt("album_id");
         st.executeUpdate(queryTwo);
+        
         rs.close();
         conn.close();
     }

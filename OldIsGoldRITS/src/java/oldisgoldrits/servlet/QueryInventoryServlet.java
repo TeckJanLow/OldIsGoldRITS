@@ -175,13 +175,9 @@ public class QueryInventoryServlet extends HttpServlet {
                 + "albumID = {4}", new Object[]{quality, quantity, price, purchasePrice, albumID});
         try {
             inventoryHandler.addNewInventory(quality, quantity, price, purchasePrice, albumID);
-
         } catch (SQLException ex) {
             Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         requestDispatcher.forward(request, response);
-
     }
-
 }
