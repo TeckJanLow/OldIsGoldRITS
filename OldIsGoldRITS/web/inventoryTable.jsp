@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <div id="page-wrap">
 
     <table>
@@ -36,15 +38,16 @@
                 <td>${element.inventory.price}</td>
                 <td>${element.album.comments}</td> 
 
-                <c:set var="sku" value="${element.inventory.inventoryID}"/>
+                <c:set var="skuID" value="${element.inventory.inventoryID}"/>
                 <c:set var="artist" value="${element.album.artist}"/>
                 <c:set var="title" value="${element.album.title}"/>
                 <c:set var="genre" value="${element.album.genre}"/>
                 <c:set var="quality" value="${element.inventory.quality}"/>
-                <c:set var="quantity" value="${element.inventory.quantityOnHand}"/>
+                <c:set var="quantityEdit" value="${element.inventory.quantityOnHand}"/>
                 <c:set var="price" value="${element.inventory.price}"/>
-                <c:set var="comments" value="${element.album.comments}"/>
-                <td><a style="margin-left:15px" data-toggle="modal" data-target="#myInventoryModal" href="#" onclick="openEdit('${sku}', '${quantity}', '${price}', '${comments}');"><span class="glyphicon glyphicon-edit"></span></a>
+                <c:set var="commentsEdit" value="${fn:trim(element.album.comments)}"/>
+                
+                <td><a style="margin-left:15px" data-toggle="modal" data-target="#myInventoryModal" href="#" onclick="editInventory('${skuID}','${quantityEdit}', '${price}','${commentsEdit}');"><span class="glyphicon glyphicon-edit"></span></a>
                     <a style="margin-left:10px" data-toggle="modal" data-target="#confirmDeleteModal" id ="delete_${element.inventory.inventoryID}" href="#" onclick="deleteInventory('${sku}');"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
 
@@ -77,22 +80,22 @@
                 <form class="form-horizontal">
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-1">
-                            <input type="text" id="sku" class="form-control"  disabled>
+                            <input type="text" id="skuID" class="form-control"  disabled>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-1">
-                            <input type="number" min="1" class="form-control" id="quantity" >
+                            <input type="number" min="1" class="form-control" id="quantity" placeholder="Quantity">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-1">
-                            <input type="number" min="1" class="form-control" id="price" >
+                            <input type="number" min="1" class="form-control" id="price" placeholder="Price">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-1">
-                            <input type="text" class="form-control" id="comments" >
+                            <input type="text" class="form-control" id="comments" placeholder="Comments" >
                         </div>
                     </div>
                 </form>
@@ -106,16 +109,25 @@
 </div>
 
 <script>
-    function openEdit(identity, quantity, price, comments)
+    function inventoryEdit(identity, quantity, price, comments)
     {
         console.log('Edit button was clicked!');
-        $('#sku').val(identity);
-        $('#quantity').attr('placeholder', "Quantity");
+//        $('#price').val(price);
+//        $('#comments').val(comments);
+//        $('#quantity').val(quantity);
+//        $('#skuID').val(identity);
+
+    }
+    function editInventory(identity,quantity,price,comments)
+    {
+        
+        if(comments !== '')
+        {
+            $('#comments').val(comments);
+        }
+        $('#skuID').val(identity);
         $('#quantity').val(quantity);
-        $('#price').attr('placeholder', "Price");
         $('#price').val(price);
-        $('#comments').attr('placeholder', "Comments");
-        $('#comments').val(comments);
     }
 
     $.ready(function () {
@@ -123,6 +135,7 @@
         $('#albumList').on('change', function () {
             console.log($('#albumList').val());
         });
+
     });
 
     $('#closeButton').click(function () {
