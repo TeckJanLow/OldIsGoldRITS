@@ -27,6 +27,40 @@
 
     </head>
 
+    <style>
+
+        /* Smartphones (portrait and landscape) ----------- */
+        @media only screen
+        and (min-device-width : 320px)
+        and (max-device-width : 480px) {
+            body { 
+                padding: 0; 
+                margin-left:0; 
+                width: 400px 
+            }
+
+            #btnStatus{
+                margin-top: 15px
+            }
+            .form-control
+            {
+                width:90%
+            }
+            .form-group
+            {
+                margin-left:12px
+            }
+            #search
+            {
+                margin-left: 12px
+            }
+            #addNewRequest
+            {
+                margin-left: 12px
+            }
+        }
+    </style>
+
     <body>
         <jsp:include page="header.jsp"></jsp:include>
             <div id="mainContent" style="display: none">
@@ -46,20 +80,74 @@
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                 Search
                             </a>
+                            <a id="addNewInventory" data-toggle="modal" data-target="#addNewRequestModal" class="btn btn-primary col-md-offset-2" >
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                Add New Inventory
+                            </a>
                         </form>
                     </div>
                 </div>
             <jsp:include page="inventoryTable.jsp"></jsp:include>
-            <div class="row" id = "progressBarOverview">
-                <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped active" role="progressbar"
-                             aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                            Loading
+                <div class="row" id = "progressBarOverview">
+                    <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar"
+                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                                Loading
+                            </div>
+                        </div>
+                    </div></div>
+
+                <div class="modal fade" id="addNewInventoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Add New Inventory</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row" id = "progressBarOverviewModalAdd" hidden="true">
+                                    <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped active" role="progressbar"
+                                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                                                Please Wait...
+                                            </div>
+                                        </div>
+                                    </div></div>
+                                <div id ="updateStatusAdd"></div>
+                                <form id="addForm" class="form-horizontal" hidden="true">
+
+                                    <div class="form-group">
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <input type="text" class="form-control" id="addQuality" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <input id="addQuantity" type="number" min="1" class="form-control" id="addQuantity" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                        <jsp:include page="albumList.jsp"></jsp:include>
+                                    </div></div>     
+                                <div class="checkbox col-sm-offset-1">
+                                    <label>
+                                        <input type="checkbox" id="addStatusCheck"> Completed
+                                    </label>
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="closeAddButton" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="confirmAddNewRequest" type="button" class="btn btn-primary">Add Request</button>
                         </div>
                     </div>
-                </div></div>
-
+                </div>
+            </div>
 
         </div>
 
@@ -109,7 +197,7 @@
 
         });
 
-        
+
 
     </script>
 </html>

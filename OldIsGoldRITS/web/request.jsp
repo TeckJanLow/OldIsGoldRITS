@@ -28,36 +28,36 @@
     </head>
 
     <style>
-        
-        	/* Smartphones (portrait and landscape) ----------- */
-	@media only screen
-	and (min-device-width : 320px)
-	and (max-device-width : 480px) {
-		body { 
-			padding: 0; 
-			margin-left:0; 
-			width: 400px 
-		}
-                
-                #btnStatus{
-                    margin-top: 15px
-                }
-                .form-control
-                {
-                    width:90%
-                }
-                .form-group
-                {
-                    margin-left:12px
-                }
-                #search
-                {
-                    margin-left: 12px
-                }
-                #addNewRequest
-                {
-                    margin-left: 12px
-                }
+
+        /* Smartphones (portrait and landscape) ----------- */
+        @media only screen
+        and (min-device-width : 320px)
+        and (max-device-width : 480px) {
+            body { 
+                padding: 0; 
+                margin-left:0; 
+                width: 400px 
+            }
+
+            #btnStatus{
+                margin-top: 15px
+            }
+            .form-control
+            {
+                width:90%
+            }
+            .form-group
+            {
+                margin-left:12px
+            }
+            #search
+            {
+                margin-left: 12px
+            }
+            #addNewRequest
+            {
+                margin-left: 12px
+            }
         }
     </style>
     <body>
@@ -140,184 +140,184 @@
                                     <div class="form-group">
                                         <div class="col-sm-10 col-sm-offset-1">
                                         <jsp:include page="customerList.jsp"></jsp:include>
-                                    </div></div>     
-                                <div class="checkbox col-sm-offset-1">
-                                    <label>
-                                        <input type="checkbox" id="addStatusCheck"> Completed
-                                    </label>
-                                </div>
+                                        </div></div>     
+                                    <div class="checkbox col-sm-offset-1">
+                                        <label>
+                                            <input type="checkbox" id="addStatusCheck"> Completed
+                                        </label>
+                                    </div>
 
 
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="closeAddButton" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button id="confirmAddNewRequest" type="button" class="btn btn-primary">Add Request</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="closeAddButton" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="confirmAddNewRequest" type="button" class="btn btn-primary">Add Request</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
+            <input type="hidden" id="customerID"></input>
+        </body>
 
-        </div>
-        <input type="hidden" id="customerID"></input>
-    </body>
+        <script>
 
-    <script>
-        
-        $(document).ready(function () {
-          
-            $('li.active').removeClass('active');
-            $('#requestTab').addClass('active');
-            $('#requestForm').hide();
-            $('#page-wrap').hide();
-            $('#progressBarOverview').hide();
-            console.log('loaded request.jsp');
-            $('#requestForm').fadeIn("slow");
-            $('#mainContent').css('display', 'block');
-            statusText = '';
-            $('.dropdown-menu a').click(function (e) {
-                $('#btnStatus').html(this.innerHTML + ' <span class="caret"></span>');
-                statusText = this.innerHTML;
+            $(document).ready(function () {
 
-            });
-            $('#closeAddButton').click(function(event){
-                $('#search').trigger('click');
-                $('#updateStatusAdd').html('');
-            });
-
-            $('#search').click(function () {
-                console.log('search clicked');
+                $('li.active').removeClass('active');
+                $('#requestTab').addClass('active');
+                $('#requestForm').hide();
                 $('#page-wrap').hide();
-                $('#progressBarOverview').show();
-                status = '';
-                if (statusText === 'Completed')
-                {
-                    status = true;
-                }
-                else if (statusText === 'Pending')
-                {
-                    status = false;
-                }
-                else
-                {
+                $('#progressBarOverview').hide();
+                console.log('loaded request.jsp');
+                $('#requestForm').fadeIn("slow");
+                $('#mainContent').css('display', 'block');
+                statusText = '';
+                $('.dropdown-menu a').click(function (e) {
+                    $('#btnStatus').html(this.innerHTML + ' <span class="caret"></span>');
+                    statusText = this.innerHTML;
+
+                });
+                $('#closeAddButton').click(function (event) {
+                    $('#search').trigger('click');
+                    $('#updateStatusAdd').html('');
+                });
+
+                $('#search').click(function () {
+                    console.log('search clicked');
+                    $('#page-wrap').hide();
+                    $('#progressBarOverview').show();
                     status = '';
-                }
-
-                console.log('status =' + status);
-
-                title = $('#title').val();
-
-                $.ajax({
-                    type: "POST",
-                    url: "QueryRequest",
-                    data: {status: status, title: title},
-                    cache: false,
-                    datatype: "application/json",
-                    success: function (data, textStatus, request) {
-                        $('#progressBarOverview').hide();
-
-                        $('#page-wrap').html(data);
-                        $('#page-wrap').fadeIn("slow", function () {
-                            $(this).show();
-
-                        });
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        $('#progressBarOverview').hide();
-                        console.log(xhr.status);
-                        console.log(thrownError);
+                    if (statusText === 'Completed')
+                    {
+                        status = true;
                     }
+                    else if (statusText === 'Pending')
+                    {
+                        status = false;
+                    }
+                    else
+                    {
+                        status = '';
+                    }
+
+                    console.log('status =' + status);
+
+                    title = $('#title').val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "QueryRequest",
+                        data: {status: status, title: title},
+                        cache: false,
+                        datatype: "application/json",
+                        success: function (data, textStatus, request) {
+                            $('#progressBarOverview').hide();
+
+                            $('#page-wrap').html(data);
+                            $('#page-wrap').fadeIn("slow", function () {
+                                $(this).show();
+
+                            });
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            $('#progressBarOverview').hide();
+                            console.log(xhr.status);
+                            console.log(thrownError);
+                        }
+
+                    });
+
+                });
+                $('#customerList').on('change', function () {
+                    customerID = $(this).val();
+                    $('#customerID').val(customerID);
+                    console.log('customer id ' + customerID);
+                });
+
+                $('#addNewRequest').click(function () {
+
+                    $('#progressBarOverviewModalAdd').show();
+                    $('#addDescription').attr('placeholder', "Description");
+                    $('#addQuantity').attr('placeholder', "Quantity");
+                    $('#addQuantity').val(1);
+                    console.log('add new request button clicked!');
+                    $.ajax({
+                        type: "POST",
+                        url: "QueryPerson",
+                        data: {},
+                        cache: false,
+                        datatype: "application/json",
+                        success: function (data, textStatus, request) {
+                            $('#progressBarOverviewModalAdd').hide();
+                            $('#customerList').html(data);
+                            $('#addForm').show();
+                            console.log(data);
+
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            $('#progressBarOverviewModalAdd').hide();
+                            console.log(xhr.status);
+                            console.log(thrownError);
+                        }
+
+                    });
 
                 });
 
-            });
-            $('#customerList').on('change', function () {
-               customerID = $(this).val();
-                $('#customerID').val(customerID);
-                console.log('customer id ' + customerID);
-            });
+                $('#confirmAddNewRequest').click(function () {
+                    console.log('Default customer id = ' + $('#option_0').val());
 
-            $('#addNewRequest').click(function () {
 
-                $('#progressBarOverviewModalAdd').show();
-                $('#addDescription').attr('placeholder',"Description");
-                $('#addQuantity').attr('placeholder',"Quantity");
-                $('#addQuantity').val(1);
-                console.log('add new request button clicked!');
-                $.ajax({
-                    type: "POST",
-                    url: "QueryPerson",
-                    data: {},
-                    cache: false,
-                    datatype: "application/json",
-                    success: function (data, textStatus, request) {
-                        $('#progressBarOverviewModalAdd').hide();
-                        $('#customerList').html(data);
-                        $('#addForm').show();
-                        console.log(data);
+                    $('#progressBarOverviewModalAdd').show();
+                    $('#addForm').hide();
+                    customerID = $('#customerID').val();
+                    if (typeof customerID === 'undefined' || customerID === '')
+                    {
 
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        $('#progressBarOverviewModalAdd').hide();
-                        console.log(xhr.status);
-                        console.log(thrownError);
+                        customerID = $('#option_0').val();
                     }
+                    employeeID = "${empId}";
+                    console.log('Employee ID = ' + employeeID + ' Customer ID = ' + customerID);
+                    description = $('#addDescription').val();
+                    if (description === '')
+                    {
+                        alert('Please enter a description!');
+                    }
+                    quantity = $('#addQuantity').val();
+                    if (quantity === '')
+                    {
+                        quantity = 1;
+                    }
+                    status = $('#addStatusCheck').is(':checked');
+                    requestDate = moment().format('YYYY-MM-DD');
+                    $.ajax({
+                        type: "POST",
+                        url: "QueryRequest",
+                        data: {add: true, status: status, customerID: customerID, employeeID: employeeID, description: description, quantity: quantity, date: requestDate},
+                        cache: false,
+                        datatype: "application/json",
+                        success: function (data, textStatus, request) {
+                            $('#progressBarOverviewModalAdd').hide();
+                            $('#updateStatusAdd').html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> New Request added </div>');
+
+                            $('#addForm').show();
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            $('#progressBarOverviewModalAdd').hide();
+                            console.log(xhr.status);
+                            console.log(thrownError);
+                            $('#addForm').show();
+
+                        }
+
+                    });
+
 
                 });
-
             });
-
-            $('#confirmAddNewRequest').click(function () {
-               console.log('Default customer id = ' + $('#option_0').val());
-
-                
-                $('#progressBarOverviewModalAdd').show();
-                $('#addForm').hide();
-                customerID = $('#customerID').val();
-                if(typeof customerID === 'undefined' || customerID === '')
-                {
-                  
-                  customerID = $('#option_0').val();
-                }
-                employeeID = "${empId}";
-                console.log('Employee ID = ' + employeeID + ' Customer ID = ' + customerID);
-                description = $('#addDescription').val();
-                if (description === '')
-                {
-                    alert('Please enter a description!');
-                }
-                quantity = $('#addQuantity').val();
-                if (quantity === '')
-                {
-                    quantity = 1;
-                }
-                status = $('#addStatusCheck').is(':checked');
-                requestDate = moment().format('YYYY-MM-DD');
-                $.ajax({
-                    type: "POST",
-                    url: "QueryRequest",
-                    data: {add: true, status: status, customerID: customerID, employeeID:employeeID, description: description, quantity: quantity, date: requestDate},
-                    cache: false,
-                    datatype: "application/json",
-                    success: function (data, textStatus, request) {
-                        $('#progressBarOverviewModalAdd').hide();
-                        $('#updateStatusAdd').html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> New Request added </div>');
-
-                        $('#addForm').show();
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        $('#progressBarOverviewModalAdd').hide();
-                        console.log(xhr.status);
-                        console.log(thrownError);
-                        $('#addForm').show();
-                        
-                    }
-
-                });
-
-
-            });
-        });
 
 
 
