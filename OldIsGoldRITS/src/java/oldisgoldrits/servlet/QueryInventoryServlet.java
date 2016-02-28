@@ -43,6 +43,7 @@ public class QueryInventoryServlet extends HttpServlet {
         String title = request.getParameter("title");
         Boolean update = Boolean.valueOf(request.getParameter("update"));
         Boolean add = Boolean.valueOf(request.getParameter("add"));
+        Boolean deleteInventory = Boolean.valueOf(request.getParameter("delete"));
 
         Logger log = Logger.getLogger(getClass().getSimpleName());
         log.log(Level.INFO, "SKU = {0}", sku);
@@ -51,6 +52,8 @@ public class QueryInventoryServlet extends HttpServlet {
             runUpdate(request, response);
         } else if (add) {
             addInventory(request, response);
+        } else if (deleteInventory) {
+            deleteInventory(request, response);
         } else {
             InventoryHandler inventoryHandler = new InventoryHandler();
             if ((sku == null || sku.equals("")) && (title == null || title.equals(""))) {
@@ -178,5 +181,22 @@ public class QueryInventoryServlet extends HttpServlet {
             Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         requestDispatcher.forward(request, response);
+    }
+    
+    private void deleteInventory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        Integer inventoryID = Integer.parseInt(request.getParameter("sku").trim());
+        
+        InventoryHandler inventoryHandler = new InventoryHandler();
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/inventoryTable.jsp");
+        
+        try {
+            inventoryHandler.deleteInventory(inventoryID);
+        } catch (SQLException e) {
+            Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        requestDispatcher.forward(request, response);
+        
     }
 }

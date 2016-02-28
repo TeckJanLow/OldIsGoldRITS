@@ -181,7 +181,6 @@ public class QueryRequestServlet extends HttpServlet {
         Logger log = Logger.getLogger(getClass().getSimpleName());
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
         try {
-
             requestHandler.deleteRequest(requestID);
         } catch (SQLException ex) {
             Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);

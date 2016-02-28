@@ -166,12 +166,12 @@
             console.log('loaded inventory.jsp');
             $('#inventoryForm').fadeIn("slow");
             $('#mainContent').css('display', 'block');
-            
+
             $('#addQuality').on('change', function () {
                 qualityText = $(this).val();
                 console.log('quality selected is ' + qualityText);
             });
-            
+
         });
 
         $('#albumList').on('change', function () {
@@ -209,8 +209,6 @@
 
             });
         });
-
-//            <--UNTESTED CODE PAST HERE-->
 
         $('#addNewInventory').click(function () {
 
