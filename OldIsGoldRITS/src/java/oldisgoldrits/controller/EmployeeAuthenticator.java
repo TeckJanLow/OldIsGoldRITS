@@ -26,7 +26,7 @@ public class EmployeeAuthenticator {
      * This method returns the salt used to encrypt the password
      * @return
      */
-    public String getSalt() {
+    private String getSalt() {
         return salt;
     }
 
