@@ -22,13 +22,48 @@
 <script src="js/bootstrap.min.js"></script>
 
     </head>
-
+    <style>
+        	/* Smartphones (portrait) ----------- */
+	@media only screen
+	and (min-device-width : 320px)
+	and (max-device-width : 480px) and (orientation: portrait) {
+		.form input
+                {
+                    width:90%;
+                    font-size: 56px;
+                }
+                .form input:focus
+                {
+                    margin-left: -15%;
+                    width:130%;
+                    font-size: 64px;
+                }
+                .container h1{
+                    font-weight: 400;
+                    font-size: 125px;
+                }
+                
+                .form button
+                {
+                    width: 100%;
+                    font-size: 60px;
+                    margin-top: 40px
+                }
+                .wrapper
+                {
+                    height: 41%;
+                    margin-top: -37%;
+                }
+             
+               
+        }
+    </style>
     <body>
 <div id ="loginStatus"></div>
         <div class="wrapper">
             <div class="container">
              
-                <h1>Old is Gold</h1>
+                <h1 id="appName">Old is Gold</h1>
 
                 <form class="form">
                        
@@ -76,6 +111,7 @@
                 else{
                     console.log('User = '+user+' pass= '+pass);
                     $('form').fadeOut(500);
+                    
                 $.ajax({
                     type: "POST",
                     url: "LoginAuth",
@@ -84,6 +120,7 @@
                     datatype: "application/json",
                     success: function(response){
                         window.location = "index";
+                       
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                     $('form').fadeIn(500); 

@@ -82,7 +82,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="albumTitle">Title</label>
-                                <input type="text" class="form-control" id="title" placeholder="Title">
+                                <input type="text" class="form-control" id="title" placeholder="Description">
                             </div>
 
                             <a id="search" class="btn btn-default" >
