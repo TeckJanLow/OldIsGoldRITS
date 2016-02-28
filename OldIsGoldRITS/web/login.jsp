@@ -51,7 +51,7 @@
                 }
                 .wrapper
                 {
-                    height: 41%;
+                    height: 50%;
                     margin-top: -37%;
                 }
              
