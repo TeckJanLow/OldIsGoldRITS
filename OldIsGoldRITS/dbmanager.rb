@@ -16,7 +16,8 @@ class DB_Manager
         inventory_query.each do |row|
         	inventory_items << {:sku=>row[0],:artist=>row[1],:title=>row[2],:quality=>row[3],:price=>row[4]}
         end
-		return {:inventory=>inventory_items}.to_json
+        
+        return inventory_items[0].to_json
 		@@mysql_client.close()
 	end
 		

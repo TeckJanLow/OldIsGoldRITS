@@ -4,6 +4,7 @@ require 'json'
 require './dbmanager'
 
 set :port, 5678
+set :bind, '0.0.0.0'
 
 get '/' do
 	"#{Time.now}"
