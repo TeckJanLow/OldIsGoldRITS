@@ -8,6 +8,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <select id="albumList" class="form-control">
 <c:forEach var="element" items="${albumList}">
-    <option value ="${element.id}">${element.title}, ${element.artist}</option>
+    <option value ="${element.albumID}">${element.title}, ${element.artist}</option>
 </c:forEach>
 </select>

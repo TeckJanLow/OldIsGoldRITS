@@ -85,15 +85,15 @@ public class InventoryHandler {
      * @throws SQLException
      */
     public void addNewInventory(String quality, int quantity, double price,
-            double purchasePrice, int albumID) throws SQLException {
+            int albumID) throws SQLException {
 
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.connect();
         String query = "INSERT INTO INVENTORY (quality, quantity, price, "
-                + "purchase_price, album_ID) VALUES (" + quality + ", " + quantity
-                + ", " + price + ", " + purchasePrice + ", " + albumID + ")";
+                + "album_ID) VALUES ('" + quality + "' , " + quantity
+                + ", " + price + ", " + albumID + ")";
         Statement st = conn.createStatement();
-        st.executeUpdate(query);
+        st.execute(query);
         conn.close();
     }
 
@@ -139,7 +139,7 @@ public class InventoryHandler {
         String query = "DELETE FROM INVENTORY WHERE sku = '"
                 + inventoryID + "'";
         Statement st = conn.createStatement();
-        st.executeUpdate(query);
+        st.execute(query);
         conn.close();
     }
 

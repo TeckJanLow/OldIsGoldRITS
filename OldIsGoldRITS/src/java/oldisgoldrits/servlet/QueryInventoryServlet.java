@@ -165,16 +165,15 @@ public class QueryInventoryServlet extends HttpServlet {
         String quality = request.getParameter("quality").trim();
         Integer quantity = Integer.parseInt(request.getParameter("quantity").trim());
         Double price = Double.parseDouble(request.getParameter("price").trim());
-        Double purchasePrice = Double.parseDouble(request.getParameter("purchasePrice").trim());
         Integer albumID = Integer.parseInt(request.getParameter("albumID").trim());
 
         InventoryHandler inventoryHandler = new InventoryHandler();
         Logger log = Logger.getLogger(getClass().getSimpleName());
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/inventoryTable.jsp");
-        log.log(Level.INFO, "quality = {0} quantity = {1} price = {2} purchase = {3} "
-                + "albumID = {4}", new Object[]{quality, quantity, price, purchasePrice, albumID});
+        log.log(Level.INFO, "quality = {0} quantity = {1} price = {2} "
+                + "albumID = {3}", new Object[]{quality, quantity, price, albumID});
         try {
-            inventoryHandler.addNewInventory(quality, quantity, price, purchasePrice, albumID);
+            inventoryHandler.addNewInventory(quality, quantity, price, albumID);
         } catch (SQLException ex) {
             Logger.getLogger(QueryInventoryServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

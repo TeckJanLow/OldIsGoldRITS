@@ -4,6 +4,10 @@
         <servlet-name>QueryPersonServlet</servlet-name>
         <url-pattern>/QueryPerson</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QueryAlbumServlet</servlet-name>
+        <url-pattern>/QueryAlbum</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

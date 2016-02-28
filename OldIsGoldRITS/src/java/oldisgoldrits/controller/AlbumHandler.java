@@ -88,7 +88,7 @@ public class AlbumHandler {
         
         DatabaseConnector dbc = new DatabaseConnector();
         try (Connection conn = dbc.connect()) {
-            String query = "SELECT title, artist FROM ALBUM ORDER BY title ASC" ;
+            String query = "SELECT album_id, title, artist FROM ALBUM ORDER BY title ASC" ;
             
             Statement st = conn.createStatement();
             Logger log  = Logger.getLogger(getClass().getSimpleName());

@@ -80,7 +80,7 @@
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                 Search
                             </a>
-                            <a id="addNewInventory" data-toggle="modal" data-target="#addNewRequestModal" class="btn btn-primary col-md-offset-2" >
+                            <a id="addNewInventory" data-toggle="modal" data-target="#addNewInventoryModal" class="btn btn-primary col-md-offset-2" >
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                 Add New Inventory
                             </a>
@@ -120,36 +120,40 @@
 
                                     <div class="form-group">
                                         <div class="col-sm-10 col-sm-offset-1">
-                                            <input type="text" class="form-control" id="addQuality" >
+                                            <select id="addQuality" class="form-control">
+                                                <option value ="mint" selected="selected">Mint</option>
+                                                <option value ="good">Good</option>
+                                                <option value ="fair">Fair</option>
+                                                <option value ="poor">Poor</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <input id="addQuantity" type="number" min="1" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-10 col-sm-offset-1">
-                                            <input id="addQuantity" type="number" min="1" class="form-control" id="addQuantity" >
+                                            <input id="addPrice" type="number" min="1" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-10 col-sm-offset-1">
                                         <jsp:include page="albumList.jsp"></jsp:include>
                                     </div></div>     
-                                <div class="checkbox col-sm-offset-1">
-                                    <label>
-                                        <input type="checkbox" id="addStatusCheck"> Completed
-                                    </label>
-                                </div>
-
-
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button id="closeAddButton" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button id="confirmAddNewRequest" type="button" class="btn btn-primary">Add Request</button>
+                            <button id="confirmAddNewInventory" type="button" class="btn btn-primary">Add Inventory</button>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
+        <input type="hidden" id="albumID"></input>
 
     </body>
     <script>
@@ -162,7 +166,18 @@
             console.log('loaded inventory.jsp');
             $('#inventoryForm').fadeIn("slow");
             $('#mainContent').css('display', 'block');
+            
+            $('#addQuality').on('change', function () {
+                qualityText = $(this).val();
+                console.log('quality selected is ' + qualityText);
+            });
+            
+        });
 
+        $('#albumList').on('change', function () {
+            albumID = $(this).val();
+            $('#albumID').val(albumID);
+            console.log('album id selected is ' + albumID);
         });
 
         $('#search').click(function () {
@@ -193,8 +208,84 @@
                 }
 
             });
+        });
 
+//            <--UNTESTED CODE PAST HERE-->
 
+        $('#addNewInventory').click(function () {
+
+            $('#progressBarOverviewModalAdd').show();
+            $('#addQuantity').attr('placeholder', "Quantity");
+            $('#addQuantity').val(1);
+            $('#addPrice').attr('placeholder', "Price");
+
+            console.log('add new inventory button clicked!');
+
+            $.ajax({
+                type: "POST",
+                url: "QueryAlbum",
+                data: {},
+                cache: false,
+                datatype: "application/json",
+                success: function (data, textStatus, request) {
+                    $('#progressBarOverviewModalAdd').hide();
+                    $('#albumList').html(data);
+                    $('#addForm').show();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#progressBarOverviewModalAdd').hide();
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+
+            });
+
+        });
+
+        $('#confirmAddNewInventory').click(function () {
+            console.log('Default album id = ' + $('#option_0').val());
+
+            $('#progressBarOverviewModalAdd').show();
+            $('#addForm').hide();
+            albumID = $('#albumID').val();
+            if (typeof albumID === 'undefined' || albumID === '')
+            {
+                albumID = $('#option_0').val();
+            }
+            console.log('album ID = ' + albumID);
+            quality = $('#addQuality').val();
+            quantity = $('#addQuantity').val();
+            if (quantity === '')
+            {
+                quantity = 1;
+            }
+            price = $('#addPrice').val();
+            if (price === '')
+            {
+                price = 0;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "QueryInventory",
+                data: {add: true, quality: quality, quantity: quantity, price: price, albumID: albumID},
+                cache: false,
+                datatype: "application/json",
+                success: function (data, textStatus, request) {
+                    $('#progressBarOverviewModalAdd').hide();
+                    $('#updateStatusAdd').html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> New Request added </div>');
+
+                    $('#addForm').show();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#progressBarOverviewModalAdd').hide();
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                    $('#addForm').show();
+
+                }
+
+            });
         });
 
 

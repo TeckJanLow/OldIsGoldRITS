@@ -23,7 +23,6 @@ import oldisgoldrits.model.Album;
  *
  * @author Dell
  */
-@WebServlet(name = "QueryAlbumServlet_1", urlPatterns = {"/QueryAlbumServlet_1"})
 public class QueryAlbumServlet extends HttpServlet {
 
     /**
