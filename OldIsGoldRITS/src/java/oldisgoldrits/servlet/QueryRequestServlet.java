@@ -44,10 +44,14 @@ public class QueryRequestServlet extends HttpServlet {
         Boolean add = Boolean.valueOf(request.getParameter("add"));
         Logger log = Logger.getLogger(getClass().getSimpleName());
         log.info("Update: " + update + "param update: " + request.getParameter("update"));
-        
+        Boolean delete = Boolean.valueOf(request.getParameter("deleteRecord"));
         if (update) {
             runUpdate(request, response);
-        } else if (add) {
+        } else if(delete)
+        {
+            deleteRequest(request, response);
+        }
+        else if (add) {
             addRequest(request, response);
         } else {
             RequestHandler requestHandler = new RequestHandler();
@@ -167,6 +171,25 @@ public class QueryRequestServlet extends HttpServlet {
             Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         requestDispatcher.forward(request, response);
+    }
+
+    private void deleteRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        Integer requestID = Integer.parseInt(request.getParameter("requestID"));
+        
+        RequestHandler requestHandler = new RequestHandler();
+        Logger log = Logger.getLogger(getClass().getSimpleName());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
+        try {
+
+            requestHandler.deleteRequest(requestID);
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryRequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        requestDispatcher.forward(request, response);
+
+
+
     }
 
 }

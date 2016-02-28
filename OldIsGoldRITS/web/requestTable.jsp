@@ -121,7 +121,7 @@
                 <td>${element.request.requestID}</td> 
                 <td>${element.request.description}</td> 
                 <td>${element.request.quantity}</td> 
-                <td><fmt:formatDate value="${element.request.date}" pattern="MMM DD, YYYY"></fmt:formatDate></td>
+                <td><fmt:formatDate value="${element.request.date}" pattern="MMM DD, YYYY" var="formattedDate"></fmt:formatDate></td>
                 <td>${element.customer.firstName} ${element.customer.lastName}</td> 
                 <td>
                     <c:choose>
@@ -147,7 +147,7 @@
                 <c:set var="quantity" value="${element.request.quantity}"/>
                 <c:set var="isCompleted" value="${element.request.isComplete}"/>
                 <td><a style="margin-left:15px" data-toggle="modal" data-target="#myModal" id ="${element.request.requestID}" href="#" onclick="openEdit('${id}', '${description}', '${quantity}', '${isCompleted}');"><span class="glyphicon glyphicon-edit"></span></a>
-                    <a style="margin-left:10px" data-toggle="modal" data-target="#confirmDeleteModal" id ="delete_${element.request.requestID}" href="#" onclick="deleteRequest('${id}');"><span class="glyphicon glyphicon-trash"></span></a>
+                    <a style="margin-left:10px" data-toggle="modal" data-target="#confirmDeleteModal" id ="delete_${element.request.requestID}" href="#" onclick="deleteRequest('${id}','${description}','${element.customer.firstName} ${element.customer.lastName}', '${formattedDate}', '${isCompleted}');"><span class="glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr> 
         </c:forEach>
@@ -207,6 +207,54 @@
         </div>
     </div>
 </div>
+        
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Delete Request</h4>
+            </div>
+            <div class="modal-body">
+                
+                <div id ="warningStatus">
+                    <div class="alert alert-danger fade in">
+                        <strong>Warning!</strong> You are about to delete a request. This action is permanent. Deleted requests cannot be retrieved!
+                    </div>
+                </div>
+                <div id="deletedStatus"></div>
+                <div class="row" id = "deleteProgressBarOverviewModal" hidden="true">
+                    <div class="col-md-6 col-md-offset-3" style="margin-top: 50px">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar"
+                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                                Deleting...
+                            </div>
+                        </div>
+                    </div></div>
+                <form class="form-horizontal">
+                    
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-1" id="deleteDetails">
+                            <input type="hidden" id ="deleteIdentity"/> 
+                        </div>
+                    </div>
+                    <div class="checkbox col-sm-offset-1">
+                        <label>
+                            <input type="checkbox" id="confirmDeleteCheck"> I want to delete this request.
+                        </label>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelDeleteButton" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="confirmDeleteButton" type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>        
 
 <script>
     function openEdit(identity, description, quantity, statusCheck)
@@ -226,6 +274,69 @@
             $('#statusCheck').prop("checked", false);
         }
     }
+    
+    $('#cancelDeleteButton').click(function(){
+         $('#deletedStatus').html('');
+
+         $('#search').trigger('click');
+        
+    });
+    
+    function deleteRequest(identity, description, name, date, statusCheck)
+    {
+        status = 'pending';
+        if(statusCheck === true)
+        {
+           status = 'completed'; 
+        }
+        else
+        {
+            status = 'pending';
+        }
+            
+        $('#deleteDetails').html('Request ' + identity + ' "'+description+'" requested by '+name+' on '+date+' status ' + status + ' will be deleted!');
+        $('#deleteIdentity').val(identity);
+        $('#cancelDeleteButton').text('Cancel');
+    }
+    
+    $('#confirmDeleteButton').click(function(){
+        
+        if($('#confirmDeleteCheck').is(':checked'))
+        {
+            requestID = $('#deleteIdentity').val() ;
+                   
+            $('#deleteProgressBarOverviewModal').show();
+            $.ajax({
+                type: "POST",
+                url: "QueryRequest",
+                data: {requestID: requestID, deleteRecord: true},
+                cache: false,
+                datatype: "application/json",
+                success: function (data, textStatus, request) {
+                    $('#deleteProgressBarOverviewModal').hide();
+                    $('#deletedStatus').html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> Record deleted successfully</div>');
+                    $('#deleteDetails').html('');
+                    $('#deleteDetails').hide();
+                    $('#confirmDeleteButton').hide();
+                    $('#cancelDeleteButton').text('Close');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#deleteProgressBarOverviewModal').hide();
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                    $('#deletedStatus').html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Error!</strong> Failed to delete record</div>');
+                    $('#cancelDeleteButton').text('Close');
+                    $('#confirmDeleteButton').hide();
+                }
+                        
+            });
+        }
+        else
+        {
+            alert('Please confirm by checking the \'I want to delete this request\' checkbox');
+        }
+        
+    });
 
     $.ready(function () {
         $('#progressBarOverviewModal').hide();
@@ -265,14 +376,17 @@
             datatype: "application/json",
             success: function (data, textStatus, request) {
                 $('#progressBarOverviewModal').hide();
+                
                 $('#updateStatus').html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> Record updated successfully</div>');
-
+               
                 $('#updateButton').hide();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 $('#progressBarOverviewModal').hide();
                 console.log(xhr.status);
                 console.log(thrownError);
+                $('#updateStatus').html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Error!</strong> Something went wrong! Update failed.</div>');
+
                 $('#updateButton').hide();
             }
 

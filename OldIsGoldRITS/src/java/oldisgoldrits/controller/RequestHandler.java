@@ -134,10 +134,11 @@ public class RequestHandler {
         
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.connect();
-        String query = "DELETE FROM REQUEST WHERE request_id = '" 
-                + requestID + "'";
+        String query = "DELETE FROM REQUEST WHERE request_id = " 
+                + requestID + "";
         Statement st = conn.createStatement();
-        st.executeUpdate(query);
+        Logger.getLogger("Delete Request").info(query);
+        st.execute(query);
         conn.close();
     }
     
