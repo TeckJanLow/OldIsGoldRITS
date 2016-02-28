@@ -36,7 +36,7 @@ public class RequestHandler {
                 + " CUSTOMER.preferred_mode, EMPLOYEE.first_name emp_first, "
                 + "EMPLOYEE.last_name emp_last FROM REQUEST LEFT JOIN EMPLOYEE "
                 + "ON REQUEST.emp_id = EMPLOYEE.emp_id LEFT JOIN CUSTOMER ON"
-                + " REQUEST.cust_id = CUSTOMER.cust_id";
+                + " REQUEST.cust_id = CUSTOMER.cust_id order by request_id desc";
         Statement st = conn.createStatement();
         Logger log  = Logger.getLogger(getClass().getSimpleName());
         log.info(query);
@@ -64,7 +64,7 @@ public class RequestHandler {
                 + " CUSTOMER.preferred_mode, EMPLOYEE.first_name emp_first, "
                 + " EMPLOYEE.last_name emp_last FROM REQUEST LEFT JOIN EMPLOYEE "
                 + " ON REQUEST.emp_id = EMPLOYEE.emp_id LEFT JOIN CUSTOMER ON"
-                + " REQUEST.cust_id = CUSTOMER.cust_id WHERE " + condition;
+                + " REQUEST.cust_id = CUSTOMER.cust_id WHERE " + condition ;
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
        
@@ -93,10 +93,12 @@ public class RequestHandler {
         Connection conn = dbc.connect();
         String query = "INSERT INTO REQUEST (cust_id, emp_id, description, "
                 + "date, quantity, status) VALUES (" + customerID + ", " 
-                + employeeID + ", " + description + ", " + date + ", " 
+                + employeeID + ", \'" + description + "\', \'" + date + "\', " 
                 + quantity + ", " + isComplete + ")";
         Statement st = conn.createStatement();
-        st.executeUpdate(query);
+        Logger log = Logger.getLogger("Add New Request from Request Handler");
+        log.info(query);
+        st.execute(query);
         conn.close();
     }
     

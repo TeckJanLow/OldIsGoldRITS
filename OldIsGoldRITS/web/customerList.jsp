@@ -7,9 +7,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <select id="customerList" class="form-control">
-<c:forEach var="element" items="${customerList}">
-    <option value ="${element.id}">${element.lastName}, ${element.firstName}</option>
+    <c:forEach var="element" items="${customerList}" varStatus="loop">
+    <option id="option_${loop.index}" value ="${element.id}">${element.lastName}, ${element.firstName}</option>
 </c:forEach>
 </select>
+
+
+
    
            

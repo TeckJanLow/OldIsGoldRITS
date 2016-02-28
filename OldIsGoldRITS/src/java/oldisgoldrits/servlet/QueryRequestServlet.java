@@ -149,7 +149,7 @@ public class QueryRequestServlet extends HttpServlet {
     private void addRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer customerID = Integer.parseInt(request.getParameter("customerID"));
         Integer quantity = Integer.parseInt(request.getParameter("quantity").trim());
-        Integer employeeID = Integer.parseInt(request.getParameter("empID"));
+        Integer employeeID = Integer.parseInt(request.getParameter("employeeID"));
 
         String description = request.getParameter("description").trim();
         String date = request.getParameter("date");
@@ -158,7 +158,7 @@ public class QueryRequestServlet extends HttpServlet {
         RequestHandler requestHandler = new RequestHandler();
         Logger log = Logger.getLogger(getClass().getSimpleName());
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/requestTable.jsp");
-        log.log(Level.INFO, "Request {0} status = {1}", new Object[]{customerID, status});
+        log.log(Level.INFO, "Request {0} status = {1} employee = {2}, date = {3}, description = {4}", new Object[]{customerID, status, employeeID, date, description});
         try {
 
             requestHandler.addNewRequest(customerID, employeeID, description, date, quantity, status);

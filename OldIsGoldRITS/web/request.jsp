@@ -151,7 +151,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button id="closeButton" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="closeAddButton" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <button id="confirmAddNewRequest" type="button" class="btn btn-primary">Add Request</button>
                         </div>
                     </div>
@@ -161,8 +161,11 @@
         </div>
         <input type="hidden" id="customerID"></input>
     </body>
+
     <script>
+        
         $(document).ready(function () {
+          
             $('li.active').removeClass('active');
             $('#requestTab').addClass('active');
             $('#requestForm').hide();
@@ -176,6 +179,10 @@
                 $('#btnStatus').html(this.innerHTML + ' <span class="caret"></span>');
                 statusText = this.innerHTML;
 
+            });
+            $('#closeAddButton').click(function(event){
+                $('#search').trigger('click');
+                $('#updateStatusAdd').html('');
             });
 
             $('#search').click(function () {
@@ -225,9 +232,9 @@
 
             });
             $('#customerList').on('change', function () {
-                console.log($(this).val());
-                $('#customerID').val($(this).val());
-                console.log('customer id ' + $('customerID').val());
+               customerID = $(this).val();
+                $('#customerID').val(customerID);
+                console.log('customer id ' + customerID);
             });
 
             $('#addNewRequest').click(function () {
@@ -261,8 +268,19 @@
             });
 
             $('#confirmAddNewRequest').click(function () {
+               console.log('Default customer id = ' + $('#option_0').val());
+
+                
                 $('#progressBarOverviewModalAdd').show();
+                $('#addForm').hide();
                 customerID = $('#customerID').val();
+                if(typeof customerID === 'undefined' || customerID === '')
+                {
+                  
+                  customerID = $('#option_0').val();
+                }
+                employeeID = "${empId}";
+                console.log('Employee ID = ' + employeeID + ' Customer ID = ' + customerID);
                 description = $('#addDescription').val();
                 if (description === '')
                 {
@@ -278,17 +296,21 @@
                 $.ajax({
                     type: "POST",
                     url: "QueryRequest",
-                    data: {add: true, status: status, customerID: customerID, description: description, quantity: quantity, date: requestDate},
+                    data: {add: true, status: status, customerID: customerID, employeeID:employeeID, description: description, quantity: quantity, date: requestDate},
                     cache: false,
                     datatype: "application/json",
                     success: function (data, textStatus, request) {
                         $('#progressBarOverviewModalAdd').hide();
+                        $('#updateStatusAdd').html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> New Request added </div>');
 
+                        $('#addForm').show();
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         $('#progressBarOverviewModalAdd').hide();
                         console.log(xhr.status);
                         console.log(thrownError);
+                        $('#addForm').show();
+                        
                     }
 
                 });
