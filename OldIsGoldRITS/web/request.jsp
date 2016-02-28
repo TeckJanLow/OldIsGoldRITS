@@ -175,11 +175,12 @@
                 $('#requestForm').fadeIn("slow");
                 $('#mainContent').css('display', 'block');
                 statusText = '';
+                
                 $('.dropdown-menu a').click(function (e) {
                     $('#btnStatus').html(this.innerHTML + ' <span class="caret"></span>');
                     statusText = this.innerHTML;
-
                 });
+                
                 $('#closeAddButton').click(function (event) {
                     $('#search').trigger('click');
                     $('#updateStatusAdd').html('');
