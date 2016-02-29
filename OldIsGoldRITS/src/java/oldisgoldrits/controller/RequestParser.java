@@ -57,6 +57,12 @@ public class RequestParser {
         return requestList;
 
     }
+    /**
+     * THis method parses Customers from the database result to POJO objects
+     * @param rs ResultSet of customers
+     * @return Arraylist of customer object references
+     * @throws SQLException 
+     */
 
     public ArrayList<Customer> parseCustomer(ResultSet rs) throws SQLException {
 
