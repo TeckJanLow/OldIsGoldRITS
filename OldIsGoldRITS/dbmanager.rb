@@ -12,7 +12,7 @@ class DB_Manager
 	def get_inventory(barcode)
 		open_connection
 		inventory_items = Array.new
-		inventory_query = @@mysql_client.query("SELECT sku, artist, title, quality,quantity, price from INVENTORY left join ALBUM on INVENTORY.album_id = ALBUM.album_id where sku = #{barcode}", :as=>:array)
+		inventory_query = @@mysql_client.query("SELECT sku, artist, title, quality, price, quantity from INVENTORY left join ALBUM on INVENTORY.album_id = ALBUM.album_id where sku = #{barcode}", :as=>:array)
         inventory_query.each do |row|
         	inventory_items << {:sku=>row[0],:artist=>row[1],:title=>row[2],:quality=>row[3],:price=>row[4], :quantity=>row[5]}
         end
