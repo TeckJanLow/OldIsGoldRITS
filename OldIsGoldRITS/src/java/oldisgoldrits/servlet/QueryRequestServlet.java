@@ -130,6 +130,13 @@ public class QueryRequestServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    /**
+     * This method passes a message to the handler to update an existing request
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void runUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         Integer requestID = Integer.parseInt(request.getParameter("requestID"));
@@ -150,6 +157,13 @@ public class QueryRequestServlet extends HttpServlet {
         requestDispatcher.forward(request, response);
     }
 
+    /**
+     * This private method calls the request handler to add a new request
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void addRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer customerID = Integer.parseInt(request.getParameter("customerID"));
         Integer quantity = Integer.parseInt(request.getParameter("quantity").trim());
@@ -173,6 +187,13 @@ public class QueryRequestServlet extends HttpServlet {
         requestDispatcher.forward(request, response);
     }
 
+    /**
+     * This servlet method sends a message to the handler to delete an existing request
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void deleteRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         Integer requestID = Integer.parseInt(request.getParameter("requestID"));
