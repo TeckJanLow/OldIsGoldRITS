@@ -15,15 +15,28 @@ public class InventoryTable {
     private Inventory inventory;
     private Album album;
     
+    /**
+     *
+     * @param inventory
+     * @param album
+     */
     public InventoryTable(Inventory inventory, Album album) {
         this.inventory = inventory;
         this.album = album;
     }
 
+    /**
+     *
+     * @return
+     */
     public Inventory getInventory() {
         return inventory;
     }
 
+    /**
+     *
+     * @return
+     */
     public Album getAlbum() {
         return album;
     }

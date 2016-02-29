@@ -28,10 +28,26 @@ public class Customer extends Person {
      */
     private boolean isSubscribedMailingList;
     
+    /**
+     * No argument constructor for customer
+     */
     public Customer() {
         
     }
     
+    /**
+     * Full constructor for customer
+     * @param firstName The customer first name
+     * @param lastName The customer last name
+     * @param phone Phone number
+     * @param email Email address
+     * @param street Street of residence
+     * @param city City of residence
+     * @param state State of residence
+     * @param zipcode Zip code
+     * @param prefCommunication Preferred method of communication
+     * @param isSubscribedMailingList Subscription status to mailing list
+     */
     public Customer(String firstName, String lastName, int phone, String email, 
             String street, String city, String state, int zipcode, 
             String prefCommunication, boolean isSubscribedMailingList) {
@@ -40,23 +56,37 @@ public class Customer extends Person {
         this.isSubscribedMailingList = isSubscribedMailingList;
     }
 
+    /**
+     * Getter for preferred method of communication
+     * @return The preferred method of communication
+     */
     public String getPrefCommunication() {
         String prefCommunication = this.prefCommunication.toString();
         return prefCommunication;
     }
 
+    /**
+     * Setter for the preferred method of communication 
+     * @param prefCommunication The new preferred method of communication
+     */
     public void setPrefCommunication(String prefCommunication) {
         this.prefCommunication = PrefCommunication.valueOf(prefCommunication);
     }
 
-    public boolean isIsSubscribedMailingList() {
+    /**
+     * Getter for mailing list subscription 
+     * @return mailing list subscription status
+     */
+    public boolean getIsSubscribedMailingList() {
         return isSubscribedMailingList;
     }
-
+    
+    /**
+     * Setter for mailing list subscription 
+     * @param isSubscribedMailingList New subscription status
+     */
     public void setIsSubscribedMailingList(boolean isSubscribedMailingList) {
         this.isSubscribedMailingList = isSubscribedMailingList;
     }
     
-    
-
 }
