@@ -33,7 +33,7 @@ public class CustomerHandler {
      * @param zipcode The customer's zip code
      * @param prefCommunication The customer's preferred method of communication
      * @param isSubscribedMailingList Subscription status to the mailing list
-     * @throws SQLException 
+     * @throws SQLException an sqlException
      */
     public void addNewCustomer(String firstName, String lastName, int phone, 
             String email, String street, String city, String state, int zipcode, 
@@ -66,7 +66,7 @@ public class CustomerHandler {
      * @param zipcode The new customer zip code
      * @param prefCommunication The new customer preferred method of communication
      * @param isSubscribedMailingList The new customer mailing list subscription status
-     * @throws SQLException 
+     * @throws SQLException an sqlException
      */
     public void editCustomer(int customerID, String firstName, String lastName,
             int phone, String email, String street, String city, String state,
@@ -90,7 +90,7 @@ public class CustomerHandler {
     /**
      * Deletes a customer from the database.
      * @param customerID The ID of the customer to be deleted
-     * @throws SQLException 
+     * @throws SQLException an sqlException
      */
     public void deleteCustomer(int customerID) throws SQLException {
         
@@ -105,7 +105,7 @@ public class CustomerHandler {
     /**
      * This method gets all the customers
      * @return ArrayList of customer object references
-     * @throws SQLException 
+     * @throws SQLException an sqlException
      */
     public ArrayList<Customer> showAllCustomer() throws SQLException {
         

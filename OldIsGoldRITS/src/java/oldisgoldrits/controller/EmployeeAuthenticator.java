@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Login authenticator for the application
  * @author madan parameswaran
  */
 public class EmployeeAuthenticator {
@@ -24,7 +24,7 @@ public class EmployeeAuthenticator {
 
     /**
      * This method returns the salt used to encrypt the password
-     * @return
+     * @return the encryption salt
      */
     private String getSalt() {
         return salt;
@@ -41,7 +41,7 @@ public class EmployeeAuthenticator {
      * This method returns a valid employee id number as a String if authenticated correctly
      * @param user String denoting the username of the login
      * @param pass String for the password
-     * @return
+     * @return logged in employee ID
      */
     public static String login(String user, String pass)
     {
@@ -59,7 +59,6 @@ public class EmployeeAuthenticator {
                 {
                     result = rs.getInt("emp_id");
                 }
-
                 
             }
             return result.toString();
@@ -72,7 +71,7 @@ public class EmployeeAuthenticator {
     
     /**
      * This method returns the salt used for the encryption
-     * @return 
+     * @return the encryption salt
      */
     
     private String saltShaker()

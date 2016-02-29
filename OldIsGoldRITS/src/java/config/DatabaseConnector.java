@@ -15,11 +15,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Connects to the database
  * @author madan
+ * @version 1.0
  */
 public class DatabaseConnector {
     
+    /**
+     * Establish a connection to the database
+     * @return a database connection
+     */
     public Connection connect() {
         Properties prop = new Properties();
         InputStream input = null;

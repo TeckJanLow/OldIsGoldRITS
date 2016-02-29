@@ -14,11 +14,18 @@ import oldisgoldrits.model.RequestTable;
 import oldisgoldrits.model.Request;
 
 /**
- *
+ * Parses result sets into request tables
  * @author Teck Jan Low
+ * @version 1.0
  */
 public class RequestParser {
 
+    /**
+     * Parses result sets of request into an array list of request table
+     * @param rs the result set of requests
+     * @return an array list of request tables
+     * @throws SQLException an sqlException
+     */
     public ArrayList<RequestTable> parse(ResultSet rs) throws SQLException {
 
         ArrayList<RequestTable> requestList = new ArrayList();
@@ -61,7 +68,7 @@ public class RequestParser {
      * THis method parses Customers from the database result to POJO objects
      * @param rs ResultSet of customers
      * @return Arraylist of customer object references
-     * @throws SQLException 
+     * @throws SQLException an sqlException
      */
 
     public ArrayList<Customer> parseCustomer(ResultSet rs) throws SQLException {

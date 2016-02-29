@@ -13,11 +13,18 @@ import oldisgoldrits.model.Inventory;
 import oldisgoldrits.model.InventoryTable;
 
 /**
- *
+ * Parses inventory resultSets
  * @author Teck Jan Low
+ * @version 1.0
  */
 public class InventoryParser {
 
+    /**
+     * Parses result sets into inventory table lists
+     * @param rs a result set of inventory
+     * @return an array list of inventory tables
+     * @throws SQLException an sqlException
+     */
     public ArrayList<InventoryTable> parse(ResultSet rs) throws SQLException {
 
         ArrayList<InventoryTable> inventoryList = new ArrayList();
@@ -53,7 +60,7 @@ public class InventoryParser {
      * This method parses the albums from the database to our POJO objects
      * @param rs ResultSet of a query
      * @return Arraylist of album object references
-     * @throws SQLException 
+     * @throws SQLException an sqlException
      */
     
     public ArrayList<Album> parseAlbum(ResultSet rs) throws SQLException {

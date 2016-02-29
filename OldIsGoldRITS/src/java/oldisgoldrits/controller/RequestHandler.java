@@ -25,7 +25,7 @@ public class RequestHandler {
     /**
      * Retrieves all request information from the database.
      * @return ResultSet containing all request information from the database
-     * @throws SQLException 
+     * @throws SQLException an sqlException
      */
     public ArrayList<RequestTable> getRequest() throws SQLException {
         
@@ -53,7 +53,7 @@ public class RequestHandler {
      * Retrieve information regarding requests and their associated customers and employees with a condition.
      * @param condition optional condition to reduce the number of results.
      * @return returns a ResultSet containing the data from the query.
-     * @throws SQLException 
+     * @throws SQLException an sqlException
      */
     public ArrayList<RequestTable> getRequest(String condition) throws SQLException {
         
@@ -84,7 +84,7 @@ public class RequestHandler {
      * @param date The date the request was made
      * @param quantity The quantity requested
      * @param isComplete The fulfillment status of the request
-     * @throws SQLException 
+     * @throws SQLException an sqlException
      */
     public void addNewRequest(int customerID, int employeeID, String description
             , String date, int quantity, boolean isComplete) throws SQLException {
@@ -108,7 +108,7 @@ public class RequestHandler {
      * @param description The new description of the request
      * @param quantity The new quantity requested
      * @param isComplete The new status of the request
-     * @throws SQLException 
+     * @throws SQLException an sqlException
      */
     public void editRequest(int requestID, String description, int quantity, 
             boolean isComplete) throws SQLException {
@@ -128,7 +128,7 @@ public class RequestHandler {
     /**
      * Deletes a request from the database.
      * @param requestID The ID of the request to be deleted
-     * @throws SQLException 
+     * @throws SQLException an sqlException
      */
     public void deleteRequest(int requestID) throws SQLException {
         

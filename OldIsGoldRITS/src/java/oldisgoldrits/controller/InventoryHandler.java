@@ -26,7 +26,7 @@ public class InventoryHandler {
      * Retrieves a ResultSet of all inventory information.
      *
      * @return A ResultSet of all inventory data
-     * @throws SQLException
+     * @throws SQLException an sqlException
      */
     public ArrayList<InventoryTable> getInventory() throws SQLException {
 
@@ -53,7 +53,7 @@ public class InventoryHandler {
      *
      * @param condition Specified conditions for data retrieval
      * @return A ResultSet containing retrieved data
-     * @throws SQLException
+     * @throws SQLException an sqlException
      */
     public ArrayList<InventoryTable> getInventory(String condition) throws SQLException {
 
@@ -80,9 +80,8 @@ public class InventoryHandler {
      * @param quality The quality of the item
      * @param quantity The quantity of items on hand
      * @param price The retail price of the item
-     * @param purchasePrice The cost per unit of the item
      * @param albumID The ID of the album
-     * @throws SQLException
+     * @throws SQLException an sqlException
      */
     public void addNewInventory(String quality, int quantity, double price,
             int albumID) throws SQLException {
@@ -104,7 +103,7 @@ public class InventoryHandler {
      * @param quantity The new quantity of the item
      * @param price The new price of the item
      * @param comment A comment regarding the album
-     * @throws SQLException
+     * @throws SQLException an sqlException
      */
     public void editInventory(int inventoryID, int quantity, double price, 
             String comment) throws SQLException {
@@ -130,7 +129,7 @@ public class InventoryHandler {
      * Deletes an inventory item from the database.
      *
      * @param inventoryID The ID of the inventory item to be deleted
-     * @throws SQLException
+     * @throws SQLException an sqlException
      */
     public void deleteInventory(int inventoryID) throws SQLException {
 

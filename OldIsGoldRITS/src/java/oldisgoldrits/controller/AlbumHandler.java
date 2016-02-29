@@ -29,7 +29,7 @@ public class AlbumHandler {
      * @param artist The artist of the album
      * @param genre The genre of the album
      * @param comments Comments regarding the album.
-     * @throws SQLException
+     * @throws SQLException an sqlException
      */
     public void addNewAlbum(String title, String artist, String genre,
             String comments) throws SQLException {
@@ -52,7 +52,7 @@ public class AlbumHandler {
      * @param artist The new artist of the album
      * @param genre The new genre of the album
      * @param comments The new comments regarding the album
-     * @throws SQLException
+     * @throws SQLException an sqlException
      */
     public void editAlbum(int albumID, String title, String artist,
             String genre, String comments) throws SQLException {
@@ -71,7 +71,7 @@ public class AlbumHandler {
      * Deletes an album from the database.
      *
      * @param albumID The ID of the album to be deleted.
-     * @throws SQLException
+     * @throws SQLException an sqlException
      */
     public void deleteAlbum(int albumID) throws SQLException {
 
@@ -87,7 +87,7 @@ public class AlbumHandler {
     /**
      * This method shows all the albums
      * @return An arraylist of album object references
-     * @throws SQLException 
+     * @throws SQLException an sqlException
      */
     public ArrayList<Album> showAllAlbum() throws SQLException {
         
