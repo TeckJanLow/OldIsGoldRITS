@@ -38,7 +38,7 @@ public class Person {
     int id;
     
     /**
-     * Blank constructor
+     * Blank constructor for person
      */
     public Person() {
         
