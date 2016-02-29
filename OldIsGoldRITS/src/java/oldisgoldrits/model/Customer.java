@@ -7,15 +7,25 @@
 package oldisgoldrits.model;
 
 /**
- *
+ * Defines additional customer characteristics
  * @author Teck Jan Low
+ * @version 1.0
  */
 public class Customer extends Person {
     
+    /**
+     * Enum of preferred communication method
+     */
     private enum PrefCommunication {
         phone, email
     }
+    /**
+     * The customer's preferred communication method
+    */
     private PrefCommunication prefCommunication;
+    /**
+     * Customer's mailing list subscription
+     */
     private boolean isSubscribedMailingList;
     
     public Customer() {

@@ -7,15 +7,25 @@
 package oldisgoldrits.model;
 
 /**
- *
+ * Defines additional characteristics of an employee
  * @author Teck Jan Low
+ * @version 1.0
  */
 public class Employee extends Person {
 
+    /** 
+     * Enum of job types available
+     */
     private enum Job {
         Manager, Cashier
     }
+    /**
+     * The employee's job
+     */
     private Job job;
+    /**
+     * The employee's monthly salary
+     */
     private double salary;
     
     public Employee() {

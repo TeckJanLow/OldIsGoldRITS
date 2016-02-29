@@ -7,15 +7,31 @@
 package oldisgoldrits.model;
 
 /**
- *
+ * Stores album information
  * @author Teck Jan Low
+ * @version 1.0
  */
 public class Album {
     
+    /**
+     * The album ID
+     */
     private int albumID;
+    /**
+     * The album title
+     */
     private String title;
+    /**
+     * The artist of the album
+     */
     private String artist;
+    /**
+     * The genre of music
+     */
     private String genre;
+    /**
+     * Comments regarding album
+     */
     private String comments;
     
     public Album() {

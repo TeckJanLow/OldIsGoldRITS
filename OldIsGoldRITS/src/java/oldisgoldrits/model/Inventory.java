@@ -7,11 +7,15 @@
 package oldisgoldrits.model;
 
 /**
- *
+ * Defines the stock keeping units 
  * @author Teck Jan Low
+ * @version 1.0
  */
 public class Inventory {
     
+    /**
+     * Inventor
+     */
     private int inventoryID;
     private enum Quality {
         mint, good, fair, poor
