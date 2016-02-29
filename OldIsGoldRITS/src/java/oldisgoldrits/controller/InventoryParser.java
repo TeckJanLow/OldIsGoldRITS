@@ -49,6 +49,12 @@ public class InventoryParser {
         return inventoryList;
 
     }
+    /**
+     * This method parses the albums from the database to our POJO objects
+     * @param rs ResultSet of a query
+     * @return Arraylist of album object references
+     * @throws SQLException 
+     */
     
     public ArrayList<Album> parseAlbum(ResultSet rs) throws SQLException {
 

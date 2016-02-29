@@ -102,7 +102,11 @@ public class CustomerHandler {
         st.executeUpdate(query);
         conn.close();
     }
-    
+    /**
+     * This method gets all the customers
+     * @return ArrayList of customer object references
+     * @throws SQLException 
+     */
     public ArrayList<Customer> showAllCustomer() throws SQLException {
         
         DatabaseConnector dbc = new DatabaseConnector();

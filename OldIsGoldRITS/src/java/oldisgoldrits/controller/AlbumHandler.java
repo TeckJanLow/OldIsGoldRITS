@@ -84,6 +84,11 @@ public class AlbumHandler {
         conn.close();
     }
     
+    /**
+     * This method shows all the albums
+     * @return An arraylist of album object references
+     * @throws SQLException 
+     */
     public ArrayList<Album> showAllAlbum() throws SQLException {
         
         DatabaseConnector dbc = new DatabaseConnector();
