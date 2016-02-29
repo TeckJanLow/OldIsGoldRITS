@@ -21,7 +21,8 @@ import oldisgoldrits.controller.InventoryHandler;
 import oldisgoldrits.model.InventoryTable;
 
 /**
- *
+ * This servlet passes messages to the inventory handlers for the appropriate queries and 
+ *  sends the results back to the calling jsp.
  * @author madan parameswaran
  */
 @WebServlet(name = "QueryInventoryServlet", urlPatterns = {"/QueryInventory"})

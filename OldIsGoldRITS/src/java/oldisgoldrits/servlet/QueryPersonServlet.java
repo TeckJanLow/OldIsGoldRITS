@@ -20,7 +20,9 @@ import oldisgoldrits.model.Customer;
 
 /**
  *
- * @author madan
+ * This class passes customer and employee related queries to the appropriate handler to process queries and 
+ * pass the response to the jsp
+ * @author madan parameswaran
  */
 public class QueryPersonServlet extends HttpServlet {
 

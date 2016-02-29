@@ -20,7 +20,8 @@ import oldisgoldrits.controller.RequestHandler;
 import oldisgoldrits.model.RequestTable;
 
 /**
- *
+ * This servlet class passes request related operations to the appropriate handler and returns the result
+ * in an HttpServletResponse object
  * @author madan parameswaran
  */
 @WebServlet(name = "QueryRequestServlet", urlPatterns = {"/QueryRequest"})
